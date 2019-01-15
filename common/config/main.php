@@ -4,7 +4,7 @@ $db = require __DIR__ . '/database.php';
 // params
 $params = array_merge(
     require __DIR__ . '/params.php',
-    require __DIR__ . '/params_local.php'
+    require __DIR__ . '/params-local.php'
 );
 return [
     'aliases' => [

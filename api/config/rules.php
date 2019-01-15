@@ -6,9 +6,9 @@ return [
  //                'class' => 'yii\rest\UrlRule',
  //                'controller' => ['v1\controllers'],
  //        ],
-        'home' => 'v1/order/home',
-        'show' => 'v2/default/show',
-        '/' => 'v2/default/show',
+        // 'home' => 'v1/order/home',
+        // 'show' => 'v2/default/show',
+        // '/' => 'v2/default/show',
         // '/pay/notify' => '/pay/show',
         //'v1/users/check-access/<username:\w+>/<password:\w+>' => 'v1/users/check-access',
         //GET方式传参接口
