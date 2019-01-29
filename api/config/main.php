@@ -36,11 +36,11 @@ return [
                 'text/json' => 'yii\web\JsonParser',
             ],
         ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
-        ],
+        // 'user' => [
+        //     'identityClass' => 'common\models\User',
+        //     'enableAutoLogin' => true,
+        //     'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
+        // ],
         'session' => [
             // this is the name of the session cookie used for login on the api
             'name' => 'advanced-api',
