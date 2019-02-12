@@ -2,7 +2,7 @@
 namespace backend\modules\v1\controllers;
 
 use backend\controllers\ApiBaseController;
-use yii;
+use backend\services\MemberService;
 
 /**
  * 人员管理类
@@ -10,8 +10,14 @@ use yii;
  */
 class MembersController extends ApiBaseController
 {
-	public $modelClass = false;
+	public $modelClass = false;    //关闭model验证
+    private $_memberSer;    //人员管理对象
 
+    public function init()
+    {
+        parent::init();
+        $this->_memberSer = new MemberService();
+    }
     /**
      * 登录
      * @return string
@@ -32,47 +38,147 @@ class MembersController extends ApiBaseController
 
     /** 
      * 管理人员列表
-     * 
+     * @param  $page  默认1   
+     * @param  $limit  默认20
      */
     public function actionAdminList()
     {
+        $page = \Yii::$app->request->post('page',1);
+        $limit = \Yii::$app->request->post('limit',20);
 
+        $page = $page > 0 ? floor($page) : 1;
+        $limit = $limit > 0 ? floor($limit) : 20;
+        $offset = ($page - 1) * $limit;
+        // 获取总数
+        $count = $this->_memberSer->getAdminCount();
+        $pageCount = ceil( $count / $limit );
+        if ($pageCount < 1) {
+            $pageCount = 1;
+        }
+        $nextPage = $page + 1;
+        if ($pageCount <= $nextPage) {
+            $nextPage = $pageCount;
+        }
+        $prePage = $page - 1;
+        if ($prePage < 1) {
+            $prePage = 1;
+        }
+        $data = [
+            'page' => $page,
+            'limit' => $limit,
+            'nextPage' => $nextPage,
+            'prePage' => $prePage
+        ];
+        // 列表
+        $list = $this->_memberSer->getAdminPageList($limit, $offset);
+        // 空返回
+        if ($count < 1 || empty($list)) {
+            $data['list'] = [];
+            return $this->success($data);
+        }
+        $items = [];
+        foreach ($list as $key => $value) {
+            # data-list
+            $item = [];
+            $item['adId'] = $value->id;
+            $item['adName'] = $value->name;
+            $item['adPhone'] = $value->phone;
+            $item['adPhoto'] = $value->photo;
+            $item['adRole'] = $value->role;
+            $item['adRoleId'] = $value->role_id;
+            $item['adState'] = $value->state;
+            $item['adStateName'] = $value->stateName[$value->state] ?: '异常';
+            $item['lastLoginIp'] = $value->last_login_ip;
+            $item['lastLoginAt'] = $value->last_login_time;
+            $items[] = $item;
+        }
+        $data['list'] = $items;
+        return $this->success($data);
     }
 
     /**
      * 管理人员详情
-     * @param  $id
+     * @param  $adId
      */
     public function actionAdminDetail()
     {
-
+        $adId = \Yii::$app->request->post('adId',0);
+        $info = $this->_memberSer->getAdminInfo($adId);
+        if (empty($info)) {
+            return $this->error('1010');
+        }
+        $item = [];
+        $item['adId'] = $info->id;
+        $item['adName'] = $info->name;
+        $item['adPhone'] = $info->phone;
+        $item['adPhoto'] = $info->photo;
+        $item['adRole'] = $info->role;
+        $item['adRoleId'] = $info->role_id;
+        $item['adState'] = $info->state;
+        $item['adStateName'] = $info->stateName[$info->state] ?: '异常';
+        $item['lastLoginIp'] = $info->last_login_ip;
+        $item['lastLoginAt'] = $info->last_login_time;
+        return $this->success($item);
     }
 
     /**
      * 新增/编辑管理人员信息
-     * @param  $id
-     * @param  $operatorId
+     * @param  $adId  被修改管理人员ID
+     * @param  $opId  操作人ID
      */
     public function actionAdminSet()
     {
+        $adId = \Yii::$app->request->post('adId',0);
+        $opId = \Yii::$app->request->post('opId');
 
     }
 
     /**
      * 删除管理人员
+     * @param  $adId  要删除管理人员ID
+     * @param  $opId  操作人员ID
      */
     public function actionAdminDel()
     {
+        $adId = \Yii::$app->request->post('adId');
+        $opId = \Yii::$app->request->post('opId');
 
+        //$res = $this->_memberSer->setAdminStateDel($adId, $opId);
     }
 
     /**
      * 管理人员操作log
-     *
+     * @param  $adId  要查看点管理人员id
      */
     public function actionAdminLog()
     {
+        $adId = \Yii::$app->request->post('adId');
+        $page = \Yii::$app->request->post('page',1);
+        $limit = \Yii::$app->request->post('limit',20);
 
+        $page = $page > 0 ? floor($page) : 1;
+        $limit = $limit > 0 ? floor($limit) : 20;
+        $offset = ($page - 1) * $limit;
+        // 获取总数
+        $count = $this->_memberSer->getAdminLogCount($adId);
+        $pageCount = ceil( $count / $limit );
+        if ($pageCount < 1) {
+            $pageCount = 1;
+        }
+        $nextPage = $page + 1;
+        if ($pageCount <= $nextPage) {
+            $nextPage = $pageCount;
+        }
+        $prePage = $page - 1;
+        if ($prePage < 1) {
+            $prePage = 1;
+        }
+        $data = [
+            'page' => $page,
+            'limit' => $limit,
+            'nextPage' => $nextPage,
+            'prePage' => $prePage
+        ];
     }
 
     /**

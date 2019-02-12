@@ -6,7 +6,7 @@ return [
  //                'class' => 'yii\rest\UrlRule',
  //                'controller' => ['v1\controllers'],
  //        ],
-        '/' => 'v1/operations/show',
+        '/' => 'v1/members/show',
         // 'show' => 'v2/default/show',
         // '/' => '',
         // '/pay/notify' => '/pay/show',

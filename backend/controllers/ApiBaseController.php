@@ -59,7 +59,7 @@ class ApiBaseController extends ActiveController
                 $this->error('1001');
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -122,6 +122,7 @@ class ApiBaseController extends ActiveController
             '1001' => '无效请求',
             '1002' => 'token验证失败',
 
+            '1010' => '管理员账号不存在！',
 
 
         ];
