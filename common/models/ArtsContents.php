@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\ArtsStyles;
 
 /**
  * This is the model class for table "{{%arts_contents}}".
@@ -18,6 +19,15 @@ use Yii;
  */
 class ArtsContents extends \yii\db\ActiveRecord
 {
+    const CONTENT_STATE_USABLE = 1;
+    const CONTENT_STATE_DISABLE = 2;
+    const CONTENT_STATE_DEL = 0;
+
+    public $contentStateNameBox = [
+        0 => '删除',
+        1 => '可用',
+        2 => '禁用'
+    ];
     /**
      * {@inheritdoc}
      */
@@ -55,5 +65,13 @@ class ArtsContents extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];
+    }
+
+    /**
+     * 关联风格分类
+     */
+    public function getArtsStyles()
+    {
+        return $this->hasOne(ArtsStyles::className(),['id'=>'style_id']);
     }
 }

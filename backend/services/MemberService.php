@@ -1,6 +1,10 @@
 <?php
 namespace backend\services;
 
+/**
+ * 人员管理类
+ * @date  2019-02
+ */
 use common\services\CommonService;
 use common\models\Admins;
 use common\models\AdminsLog;

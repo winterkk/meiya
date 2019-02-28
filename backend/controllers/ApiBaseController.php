@@ -121,9 +121,12 @@ class ApiBaseController extends ActiveController
             '404' => '页面不存在',
             '1001' => '无效请求',
             '1002' => 'token验证失败',
+            '1003' => '操作失败',
 
             '1010' => '管理员账号不存在！',
-
+            '1011' => '查询内容不存在',
+            '1012' => '禁用类型分类失败',
+            '1013' => '内容没有搜索到',
 
         ];
         return isset($errorBox[$code]) ? $errorBox[$code] : '异常错误类型！';
@@ -205,5 +208,40 @@ class ApiBaseController extends ActiveController
     protected function getJWTheader($type='sha256')
     {
         return json_encode(['typ'=>'JWT','alg'=>$type]);
+    }
+
+    /**
+     * 分页信息
+     * @param  $page
+     * @param  $limit
+     * @param  $count
+     */
+    public function getPageInfo($page=1, $limit=20, $count=0)
+    {
+        $page = $page > 0 ? floor($page) : 1;
+        $limit = $limit > 0 ? floor($limit) : 20;
+        // 获取总数
+        if ($count <= 0) {
+            $count = 0;
+        }
+        $pageCount = ceil( $count / $limit );
+        if ($pageCount < 1) {
+            $pageCount = 1;
+        }
+        $nextPage = $page + 1;
+        if ($pageCount <= $nextPage) {
+            $nextPage = $pageCount;
+        }
+        $prePage = $page - 1;
+        if ($prePage < 1) {
+            $prePage = 1;
+        }
+        $data = [
+            'page' => $page,
+            'limit' => $limit,
+            'nextPage' => $nextPage,
+            'prePage' => $prePage
+        ];
+        return $data;
     }
 }
