@@ -12,6 +12,7 @@ use common\models\AdminsLog;
 use common\models\ArtsClasses;
 use common\models\ArtsStyles;
 use common\models\ArtsContents;
+use common\models\ArtsColors;
 
 class CategoryService extends CommonService
 {
@@ -241,10 +242,176 @@ class CategoryService extends CommonService
 	 */
 	public function getContentCateList($styleId=0, $limit, $offset)
 	{
-		$list = ArtsContents::find()->where(['>','content_state',ArtsContents::CONTENT_STATE_DEL]);
+		$list = ArtsContents::find()
+			->from(['c'=>ArtsContents::tableName()])
+			->joinWith(['artsStyles s'])
+			->where(['>','c.content_state',ArtsContents::CONTENT_STATE_DEL]);
 		if ($styleId > 0) {
-			$list->andWhere(['style_id'=>$styleId]);
+			$list->andWhere(['c.style_id'=>$styleId]);
 		}
 		return $list->limit($limit)->offset($offset)->all();
+	}
+
+	/**
+	 * 内容分类详情
+	 * @param  $contId  内容分类ID
+	 * @return  object
+	 */
+	public function getContentCateDetail($contId)
+	{
+		return ArtsContents::find()
+			->from(['c'=>ArtsContents::tableName()])
+			->joinWith(['artsStyles s'])
+			->where(['c.id'=>$contId])
+			->one();
+	}
+
+	/**
+	 * 新增/修改内容分类
+	 * @param  $styleId  风格分类
+	 * @param  $contName  内容分类名称
+	 * @param  $contSort  排序
+	 * @param  $contState  状态
+	 * @param  $contDesc  描述
+	 * @param  $contId  内容分类编号
+	 * @return  bool
+	 */
+	public function setContentCateDetail($styleId, $contName, $contSort, $contState, $contDesc, $contId=0)
+	{
+		if (!$contId) {
+			$info = new ArtsContents();
+			$info->create_at = date('Y-m-d H:i:s');
+		} else {
+			$info = ArtsContents::findOne($contId);
+			if (empty($info)) {
+				return false;
+			}
+		}
+		// 状态
+		$contState = isset($info->contentStateNameBox[$contState]) ? $contState : ArtsContents::CONTENT_STATE_USABLE;
+		$info->style_id = $styleId;
+		$info->content_name = $contName;
+		$info->content_sort = $contSort;
+		$info->content_desc = $contDesc;
+		$info->content_state = $contState;
+		return $info->save();
+	}
+
+	/**
+	 * 禁用内容分类
+	 * @param  $contId
+	 * @return  bool
+	 */
+	public function delContentCate($contId)
+	{
+		$info = ArtsContents::findOne($contId);
+		if (empty($info)) {
+			return false;
+		} else {
+			if ($info->content_state == ArtsContents::CONTENT_STATE_USABLE) {
+				return true;
+			} else {
+				$info->content_state = ArtsContents::CONTENT_STATE_USABLE;
+				return $info->save();
+			}
+		}
+	}
+
+	/**
+	 * 颜色总数
+	 * @return  number
+	 * @date  2019-03
+	 */
+	public function getColorCount()
+	{
+		return ArtsColors::find()->where(['>','color_state',ArtsColors::COLOR_STATE_DEL])->count();
+	}
+
+	/**
+	 * 颜色列表
+	 * @param  $limit
+	 * @param  $offset
+	 * @return 
+	 */
+	public function getColorList($limit=20,$offset=0)
+	{
+		return ArtsColors::find()
+			->where(['>','color_state',ArtsColors::COLOR_STATE_DEL])
+			->limit($limit)
+			->offset($offset)
+			->all();
+	}
+
+	/**
+	 * 颜色详情
+	 * @param  $colorId
+	 * @return  object
+	 */
+	public function getColorDetail($colorId)
+	{
+		return ArtsColors::find()
+			->where(['id'=>$colorId])
+			->andWhere(['>','color_state',ArtsColors::COLOR_STATE_DEL])
+			->one();
+	}
+
+	/**
+	 * 新增/修改颜色
+	 * @param  $colorName
+	 * @param  $colorSort
+	 * @param  $colorState
+	 * @param  $colorDesc
+	 * @param  $colorCode
+	 * @param  $colorImage
+	 * @param  $colorId  颜色编号
+	 * @return  bool
+	 */
+	public function setColorDetail($colorName, $colorSort, $colorState, $colorDesc, $colorCode, $colorImage, $colorId=0)
+	{
+		if (!$colorId) {
+			$info = new ArtsColors();
+			$info->create_at = date('Y-m-d H:i:s');
+		} else {
+			$info = ArtsColors::findOne($colorId);
+			if (empty($info)) {
+				return false;
+			}
+		}
+		// 处理参数
+		$colorImage = CommonService::getImagePath($colorImage);
+		if (!isset($info->colorStateNameBox[$colorState])) {
+			$colorState = ArtsColors::COLOR_STATE_USABLE;
+		}
+		$info->color_name = $colorName;
+		$info->color_sort = $colorSort;
+		$info->color_state = $colorState;
+		$info->color_desc = $colorDesc;
+		$info->color_code = $colorCode;
+		$info->color_image = $colorImage;
+		$info->update_at = date('Y-m-d H:i:s');
+		return $info->save();
+	}
+
+	/**
+	 * 禁用颜色
+	 * @param  $colorId
+	 * @return  bool
+	 */
+	public function delColor($colorId)
+	{
+		$info = ArtsColors::find()
+			->where(['id'=>$colorId])
+			->andWhere(['>','color_state',ArtsColors::COLOR_STATE_DEL])
+			->one();
+		if (empty($info)) {
+			return false;
+		} else {
+			if ($info->color_state == ArtsColors::COLOR_STATE_USABLE) {
+				return true;
+			} else {
+				$info->color_state = ArtsColors::COLOR_STATE_USABLE;
+				return $info->save();
+			}
+		}
 	}
 }

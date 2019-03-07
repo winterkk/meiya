@@ -127,6 +127,8 @@ class ApiBaseController extends ActiveController
             '1011' => '查询内容不存在',
             '1012' => '禁用类型分类失败',
             '1013' => '内容没有搜索到',
+            '1014' => '该内容分类不存在',
+            '1015' => '该颜色内容不存在',
 
         ];
         return isset($errorBox[$code]) ? $errorBox[$code] : '异常错误类型！';

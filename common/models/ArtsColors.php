@@ -19,6 +19,16 @@ use Yii;
  */
 class ArtsColors extends \yii\db\ActiveRecord
 {
+    const COLOR_STATE_USABLE = 1;
+    const COLOR_STATE_DISABLE = 2;
+    const COLOR_STATE_DEL = 0;
+
+    public $colorStateNameBox = [
+        0 => '删除',
+        1 => '可用',
+        2 => '禁用'
+    ];
+    
     /**
      * {@inheritdoc}
      */
