@@ -12,7 +12,7 @@ use yii;
  class CategoryController extends ApiBaseController
  {
  	public $modelClass = false;
- 	private $_cateSer;    //人员管理对象
+ 	private $_cateSer;    //分类管理
 
     public function init()
     {

@@ -238,6 +238,12 @@ class ApiBaseController extends ActiveController
         if ($prePage < 1) {
             $prePage = 1;
         }
+        if ($page > $nextPage) {
+            $page = $nextPage;
+        }
+        if ($page < $prePage) {
+            $page = $prePage;
+        }
         $data = [
             'page' => $page,
             'limit' => $limit,

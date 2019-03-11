@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%admins_log}}".
+ * This is the model class for table "{{%admins_logs}}".
  *
  * @property int $id
  * @property int $admin_id 管理员id
@@ -13,14 +13,14 @@ use Yii;
  * @property string $content 日志内容
  * @property string $create_at 日志生成时间
  */
-class AdminsLog extends \yii\db\ActiveRecord
+class AdminsLogs extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%admins_log}}';
+        return '{{%admins_logs}}';
     }
 
     /**

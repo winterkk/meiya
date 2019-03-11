@@ -5,23 +5,25 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%users_history}}".
+ * This is the model class for table "{{%arts_images}}".
  *
  * @property int $id
- * @property int $user_id 用户id
- * @property int $art_id 图画id
- * @property int $history_state 状态1可用0删除2不显示
+ * @property string $img_path 图片地址
+ * @property int $is_master 是否主图
+ * @property int $art_id 图片ID
+ * @property int $img_sort 显示排序
+ * @property int $img_state 状态:1可用0删除
  * @property string $create_at 创建时间
  * @property string $update_at 修改时间
  */
-class UsersHistory extends \yii\db\ActiveRecord
+class ArtsImages extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%users_history}}';
+        return '{{%arts_images}}';
     }
 
     /**
@@ -30,9 +32,10 @@ class UsersHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'art_id', 'history_state'], 'integer'],
+            [['is_master', 'art_id', 'img_sort', 'img_state'], 'integer'],
             [['create_at'], 'required'],
             [['create_at', 'update_at'], 'safe'],
+            [['img_path'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,9 +46,11 @@ class UsersHistory extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
+            'img_path' => 'Img Path',
+            'is_master' => 'Is Master',
             'art_id' => 'Art ID',
-            'history_state' => 'History State',
+            'img_sort' => 'Img Sort',
+            'img_state' => 'Img State',
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];

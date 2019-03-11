@@ -46,29 +46,10 @@ class MembersController extends ApiBaseController
         $page = \Yii::$app->request->post('page',1);
         $limit = \Yii::$app->request->post('limit',20);
 
-        $page = $page > 0 ? floor($page) : 1;
-        $limit = $limit > 0 ? floor($limit) : 20;
         $offset = ($page - 1) * $limit;
-        // 获取总数
         $count = $this->_memberSer->getAdminCount();
-        $pageCount = ceil( $count / $limit );
-        if ($pageCount < 1) {
-            $pageCount = 1;
-        }
-        $nextPage = $page + 1;
-        if ($pageCount <= $nextPage) {
-            $nextPage = $pageCount;
-        }
-        $prePage = $page - 1;
-        if ($prePage < 1) {
-            $prePage = 1;
-        }
-        $data = [
-            'page' => $page,
-            'limit' => $limit,
-            'nextPage' => $nextPage,
-            'prePage' => $prePage
-        ];
+        $pageInfo = $this->getPageInfo($page, $limit, $count);
+        $data = $pageInfo;
         // 列表
         $list = $this->_memberSer->getAdminPageList($limit, $offset);
         // 空返回
@@ -130,7 +111,7 @@ class MembersController extends ApiBaseController
     {
         $adId = \Yii::$app->request->post('adId',0);
         $opId = \Yii::$app->request->post('opId');
-
+        return  $this->error();
     }
 
     /**
@@ -142,8 +123,8 @@ class MembersController extends ApiBaseController
     {
         $adId = \Yii::$app->request->post('adId');
         $opId = \Yii::$app->request->post('opId');
-
-        //$res = $this->_memberSer->setAdminStateDel($adId, $opId);
+        return $this->error();
+        // $res = $this->_memberSer->setAdminStateDel($adId, $opId);
     }
 
     /**
@@ -156,38 +137,43 @@ class MembersController extends ApiBaseController
         $page = \Yii::$app->request->post('page',1);
         $limit = \Yii::$app->request->post('limit',20);
 
-        $page = $page > 0 ? floor($page) : 1;
-        $limit = $limit > 0 ? floor($limit) : 20;
         $offset = ($page - 1) * $limit;
-        // 获取总数
         $count = $this->_memberSer->getAdminLogCount($adId);
-        $pageCount = ceil( $count / $limit );
-        if ($pageCount < 1) {
-            $pageCount = 1;
+        $pageInfo = $this->getPageInfo($page, $limit, $count);
+
+        $list = $this->_memberSer->getAdminLogList($limit, $offset);
+        // 空返回
+        $data = $pageInfo;
+        $items = [];
+        foreach ($list as $key => $value) {
+            # data-list
+            $item = [];
+            $item['logId'] = $value->id;
+            $item['adId'] = $value->admin_id;
+            $item['adName'] = $value->admins->name;
+            $item['logType'] = $value->log_type;
+            $item['content'] = $value->content;
+            $item['createAt'] = $value->create_at;
+            $items[] = $item;
         }
-        $nextPage = $page + 1;
-        if ($pageCount <= $nextPage) {
-            $nextPage = $pageCount;
-        }
-        $prePage = $page - 1;
-        if ($prePage < 1) {
-            $prePage = 1;
-        }
-        $data = [
-            'page' => $page,
-            'limit' => $limit,
-            'nextPage' => $nextPage,
-            'prePage' => $prePage
-        ];
+        $data['list'] = $items;
+        return $this->success($data);
     }
 
     /**
      * 用户列表
-     *
+     * @param  $userName  查询条件
+     * @param  $phone  查询条件手机号
+     * @param  $page
+     * @param  $limit
      */
     public function actionUserList()
     {
+        $userName = \Yii::$app->request->post('userName','');
+        $page = \Yii::$app->request->post('page','1');
+        $limit = \Yii::$app->request->post('limit','20');
 
+        
     }
 
     /**
