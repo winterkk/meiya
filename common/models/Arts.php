@@ -3,6 +3,11 @@
 namespace common\models;
 
 use Yii;
+use common\models\ArtsClasses;
+use common\models\ArtsStyles;
+use common\models\ArtsContents;
+use common\models\ArtsColors;
+use common\models\ArtsImages;
 
 /**
  * This is the model class for table "{{%arts}}".
@@ -41,6 +46,15 @@ use Yii;
  */
 class Arts extends \yii\db\ActiveRecord
 {
+    const ART_STATE_USABLE = 1;
+    const ART_STATE_DISABLE = 2;
+    const ART_STATE_DEL = 0;
+
+    public $artStateNameBox = [
+        self::ART_STATE_USABLE => '启用',
+        self::ART_STATE_DISABLE => '禁用',
+        self::ART_STATE_DEL => '删除'
+    ];
     /**
      * {@inheritdoc}
      */
@@ -105,5 +119,36 @@ class Arts extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];
+    }
+
+    // 关联表
+    // 关联类型分类
+    public function getArtsClasses()
+    {
+        return $this->hasOne(ArtsClasses::className(),['id'=>'art_class']);
+    }
+
+    // 关联风格分类
+    public function getArtsStyles()
+    {
+        return $this->hasOne(ArtsStyles::className(),['id'=>'art_style']);
+    }
+
+    // 关联内容分类
+    public function getArtsContents()
+    {
+        return $this->hasOne(ArtsContents::className(),['id'=>'art_content']);
+    }
+
+    // 关联颜色表
+    public function getArtsColors()
+    {
+        return $this->hasOne(ArtsColors::className(),['id'=>'art_color']);
+    }
+
+    // 关联图片表
+    public function getArtsImages()
+    {
+        return $this->hasMany(ArtsImages::className(),['art_id'=>'id']);
     }
 }

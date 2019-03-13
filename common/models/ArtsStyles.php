@@ -83,4 +83,40 @@ class ArtsStyles extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ArtsContents::className(),['style_id'=>'id']);
     }
+
+    /**
+     * 风格分类集合缓存数据
+     * @return 
+     */
+    public static function getArtStylesSet()
+    {
+        $cache = \Yii::$app->cache;
+        $key = 'ART_STYLE_SET';
+        $list = $cache->get($key);
+        if ($list === false) {
+            $list = self::find()->where(['>','style_state',self::STYLE_STATE_DEL])->orderBy('style_sort')->all();
+            if (!empty($list)) {
+                $cache->set($key,$list,3600);
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * 查询风格分类详情
+     * @param  $param  风格分类id或者风格分类名
+     * @return  object
+     */
+    public static function getArtStyleInfo($param)
+    {
+        $list = $this->getArtStylesSet();
+        if (!empty($list)) {
+            foreach ($list as $key => $value) {
+                if ($value->id == $param || $value->style_name == $param) {
+                    return $value;
+                }
+            }
+        }
+        return [];
+    }
 }

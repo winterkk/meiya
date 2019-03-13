@@ -8,6 +8,7 @@ namespace backend\services;
 use common\services\CommonService;
 use common\models\Admins;
 use common\models\AdminsLog;
+use common\models\Authors;
 
 class MemberService extends CommonService
 {
@@ -70,5 +71,15 @@ class MemberService extends CommonService
 	public function getAdminLogCount($adId)
 	{
 		return AdminsLog::find()->where(['admin_id'=>$adId])->count();
+	}
+
+	/**
+	 * 获取作者信息
+	 * @param  $authorId
+	 * @return  object
+	 */
+	public function getAuthorInfoById($authorId)
+	{
+		return Authors::find()->where(['author_state'=>Authors::AUTHOR_STATE_USABLE])->one();
 	}
 }

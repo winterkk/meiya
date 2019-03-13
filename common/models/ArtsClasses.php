@@ -72,4 +72,40 @@ class ArtsClasses extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ArtsStyles::className(),['class_id'=>'id']);
     }
+
+    /**
+     * 分类集合缓存数据
+     * @return 
+     */
+    public static function getArtClassesSet()
+    {
+        $cache = \Yii::$app->cache;
+        $key = 'ART_CLASS_SET';
+        $list = $cache->get($key);
+        if ($list === false) {
+            $list = self::find()->where(['>','class_state',self::CLASS_STATE_DEL])->orderBy('class_sort')->all();
+            if (!empty($list)) {
+                $cache->set($key,$list,3600);
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * 查询分类详情
+     * @param  $param  分类id或者分类名
+     * @return  object
+     */
+    public static function getArtClassInfo($param)
+    {
+        $list = $this->getArtClassesSet();
+        if (!empty($list)) {
+            foreach ($list as $key => $value) {
+                if ($value->id == $param || $value->class_name == $param) {
+                    return $value;
+                }
+            }
+        }
+        return [];
+    }
 }

@@ -74,4 +74,40 @@ class ArtsContents extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ArtsStyles::className(),['id'=>'style_id']);
     }
+
+    /**
+     * 内容分类集合缓存数据
+     * @return 
+     */
+    public static function getArtContentsSet()
+    {
+        $cache = \Yii::$app->cache;
+        $key = 'ART_CONTENT_SET';
+        $list = $cache->get($key);
+        if ($list === false) {
+            $list = self::find()->where(['>','content_state',self::CONTENT_STATE_DEL])->orderBy('content_sort')->all();
+            if (!empty($list)) {
+                $cache->set($key,$list,3600);
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * 内容风格分类详情
+     * @param  $param  内容分类id或者内容分类名
+     * @return  object
+     */
+    public static function getArtContentInfo($param)
+    {
+        $list = $this->getArtContentsSet();
+        if (!empty($list)) {
+            foreach ($list as $key => $value) {
+                if ($value->id == $param || $value->content_name == $param) {
+                    return $value;
+                }
+            }
+        }
+        return [];
+    }
 }
