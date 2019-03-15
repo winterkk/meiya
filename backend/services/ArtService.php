@@ -64,7 +64,6 @@ class ArtService extends CommonService
 	{
 		$list = Arts::find()
 			->from(['a'=>Arts::tableName()])
-			->joinWith(['artsImages g'])
 			->joinWith(['artsColors c'])
 			->where(['>','a.art_state',Arts::ART_STATE_DEL]);
 		// 查询条件
@@ -131,4 +130,42 @@ class ArtService extends CommonService
 	{
 		return ArtsColors::find()->where(['id'=>$colorId,'color_state'=>ArtsColors::COLOR_STATE_USABLE])->one();
 	}
+
+	/**
+	 * 获取图片的信息
+	 * @param  $picId  图片id
+	 * @return  object
+	 */
+	public function getArtsInfo($picId)
+	{
+		return Arts::find()
+			->from(['a'=>Arts::tableName()])
+			->joinWith(['artsColors c'])
+			->joinWith(['artsImages g'])
+			->joinWith(['authors u'])
+			->where(['id'=>$picId])
+			->andWhere(['>','a.art_state',Arts::ART_STATE_DEL])
+			->one();
+	}
+
+	/**
+	 * 禁用图片
+	 * @param  $picId
+	 * @return  bool
+	 */
+	public function delArt($picId)
+	{
+		$info = Arts::findOne($picId);
+		if (empty($info)) {
+			return false;
+		}
+		if ($info->art_state == Arts::ART_STATE_USABLE) {
+			return true;
+		} else {
+			$info->art_state = Arts::ART_STATE_USABLE;
+			return $info->save();
+		}
+	}
+
+
 }

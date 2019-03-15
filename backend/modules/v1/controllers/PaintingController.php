@@ -110,12 +110,51 @@ class PaintingController extends ApiBaseController()
 	public function actionPicDefault()
 	{
 		$picId = \Yii::$app->request->post('picId');
-
+		if (!$picId) {
+			return $this->error('1001');
+		}
+		// info
+		$value = $this->_artSer->getArtsInfo($picId);
+		$item = [];
+		if (!empty($value)) {
+			$item['picId'] = $value->id;
+    		$item['picName'] = $value->art_title;
+    		$item['picNo'] = $value->art_no;
+    		$item['authorId'] = $value->author_id;
+    		$authorInfo = $this->_memberSer->getAuthorInfoById($value->author_id);
+    		$item['authorName'] = isset($authorInfo->author_name) ? $authorInfo->author_name : '';
+    		$item['classId'] = $value->art_class;
+    		$className = $this->_artSer->getArtClassName($value->art_class);
+    		$item['className'] = $className;
+    		$item['styleId'] = $value->art_style;
+    		$styleName = $this->_artSer->getArtStyleName($value->art_style);
+    		$item['styleName'] = $styleName;
+    		$item['contentId'] = $value->art_content;
+    		$contName = $this->_artSer->getArtContentName($value->art_content);
+    		$item['contentName'] = $contName;
+    		$item['colorId'] = $value->art_color;
+    		$colorInfo = $this->_artSer->getArtColorInfo($value->art_color);
+    		$item['colorName'] = isset($colorInfo->color_name) ? $colorInfo->color_name : '';
+    		$item['colorCode'] = isset($colorInfo->color_code) ? $colorInfo->color_code : '';
+    		$item['length'] = $value->art_length;
+    		$item['width'] = $value->art_width;
+    		$item['size'] = $value->art_size;
+    		$item['dpi'] = $value->art_dpi;
+    		$item['mark'] = $value->mark;
+    		$item['desc'] = $value->desc;
+    		$item['likes'] = $value->likes;
+    		$item['state'] = $value->art_state;
+    		$item['stateName'] = $value->artStateNameBox[$value->art_state];
+    		$item['showImage'] = CommonServer::getImageUrl($value->show_image);
+    		$item['updateAt'] = $value->update_at;
+		}
+		return $this->success($item);
 	}
 
 	/**
 	 * 新增/编辑图片
-	 *
+	 * @param  $picId  图片id（非必须）
+	 * @param  $picName  图片名称
 	 */
 	public function actionPicSet()
 	{
@@ -123,12 +162,21 @@ class PaintingController extends ApiBaseController()
 	}
 
 	/**
-	 * 删除图片
-	 *
+	 * 禁用图片
+	 * @param  $picId
 	 */
 	public function actionPicDel()
 	{
-
+		$picId = \Yii::$app->request->post('picId');
+		if (!$picId) {
+			return $this->error('1001');
+		}
+		$res = $this->_artSer->delArt($picId);
+		if ($res) {
+			return $this->success('删除成功!');
+		} else {
+			return $this->error('1021');
+		}
 	}
 
 	/**

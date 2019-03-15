@@ -130,6 +130,8 @@ class ApiBaseController extends ActiveController
             '1014' => '该内容分类不存在',
             '1015' => '该颜色内容不存在',
 
+            '1021' => '删除图片失败'
+
         ];
         return isset($errorBox[$code]) ? $errorBox[$code] : '异常错误类型！';
     }

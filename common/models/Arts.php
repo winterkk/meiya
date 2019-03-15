@@ -8,6 +8,7 @@ use common\models\ArtsStyles;
 use common\models\ArtsContents;
 use common\models\ArtsColors;
 use common\models\ArtsImages;
+use common\models\Authors;
 
 /**
  * This is the model class for table "{{%arts}}".
@@ -150,5 +151,11 @@ class Arts extends \yii\db\ActiveRecord
     public function getArtsImages()
     {
         return $this->hasMany(ArtsImages::className(),['art_id'=>'id']);
+    }
+
+    // 关联作者表
+    public function getAuthors()
+    {
+        return $this->hasOne(Authors::className(),['id'=>'author_id']);
     }
 }
