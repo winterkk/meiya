@@ -46,9 +46,9 @@ class MembersController extends ApiBaseController
         $page = \Yii::$app->request->post('page',1);
         $limit = \Yii::$app->request->post('limit',20);
 
-        $offset = ($page - 1) * $limit;
         $count = $this->_memberSer->getAdminCount();
         $pageInfo = $this->getPageInfo($page, $limit, $count);
+        $offset = ($pageInfo['page'] - 1) * $limit;
         $data = $pageInfo;
         // 列表
         $list = $this->_memberSer->getAdminPageList($limit, $offset);

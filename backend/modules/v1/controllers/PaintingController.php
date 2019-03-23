@@ -155,10 +155,49 @@ class PaintingController extends ApiBaseController()
 	 * 新增/编辑图片
 	 * @param  $picId  图片id（非必须）
 	 * @param  $picName  图片名称
+     * @param  $authorId  作者
+     * @param  $birthAt  创作时间
+     * @param  $artNum  数量
+     * @param  $marketPrice  市场价
+     * @param  $currentPrice  现价
+     * @param  $showImages  array 图片地址,第一张是缩略图
+     * @param  $artClass  类型分类
+     * @param  $artStyle  风格分类
+     * @param  $artContent  内容分类
+     * @param  $artColor  颜色信息
+     * @param  $length  长度
+     * @param  $width  宽度
+     * @param  $dpi  分辨率
+     * @param  $mark  备注
+     * @param  $desc  描述
 	 */
 	public function actionPicSet()
 	{
+        $picId = \Yii::$app->request->post('picId');
+        $picName = \Yii::$app->request->post('picName');
+        $authorId = \Yii::$app->request->post('authorId');
+        $birthAt = \Yii::$app->request->post('birthAt');
+        $artNum = \Yii::$app->request->post('artNum',1);
+        $marketPrice = \Yii::$app->request->post('marketPrice');
+        $currentPrice = \Yii::$app->request->post('currentPrice');
+        $showImages = \Yii::$app->request->post('showImages');
+        $artClass = \Yii::$app->request->post('artClass');
+        $artStyle = \Yii::$app->request->post('artStyle');
+        $artContent = \Yii::$app->request->post('artContent');
+        $artColor = \Yii::$app->request->post('artColor');
+        $length = \Yii::$app->request->post('length');
+        $width = \Yii::$app->request->post('width');
+        $dpi = \Yii::$app->request->post('dpi');
+        $mark = \Yii::$app->request->post('mark');
+        $desc = \Yii::$app->request->post('desc');
+        $userId = $_POST['userId'];
 
+        $result = $this->_artSer->setArtDetail($userId,$picName,$authorId,$birthAt,$artNum,$marketPrice,$currentPrice,$showImages,$artClass,$artStyle,$artContent,$artColor,$length,$width,$dpi,$mark,$desc,$picId);
+        if ($result) {
+            return $this->success('添加成功');
+        } else {
+            return $this->error('添加失败');
+        }
 	}
 
 	/**
@@ -181,7 +220,7 @@ class PaintingController extends ApiBaseController()
 
 	/**
 	 * 作者的图片列表
-	 *
+	 * 
 	 *
 	 */
 	public function actionAuthorPicList()

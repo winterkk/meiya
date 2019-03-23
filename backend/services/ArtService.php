@@ -167,5 +167,73 @@ class ArtService extends CommonService
 		}
 	}
 
+	/**
+	 * 新增/修改图片
+	 * @param  $userId
+	 * @param  $picId  图片id（非必须）
+	 * @param  $picName  图片名称
+     * @param  $authorId  作者
+     * @param  $birthAt  创作时间
+     * @param  $artNum  数量
+     * @param  $marketPrice  市场价
+     * @param  $currentPrice  现价
+     * @param  $showImages  图片地址
+     * @param  $artClass  类型分类
+     * @param  $artStyle  风格分类
+     * @param  $artContent  内容分类
+     * @param  $artColor  颜色信息
+     * @param  $length  长度
+     * @param  $width  宽度
+     * @param  $dpi  分辨率
+     * @param  $mark  备注
+     * @param  $desc  描述
+	 */
+	public function setArtDetail($userId,$picName,$authorId,$birthAt,$artNum,$marketPrice,$currentPrice,$showImages,$artClass,$artStyle,$artContent,$artColor,$length,$width,$dpi,$mark,$desc,$picId=0)
+	{
+		try {
+			// log
+			\Yii::info("用户：".$userId."添加/修改图片：".$picName);
+			// 处理图片主表信息
+			if ($picId) {
+				$picInfo = Arts::findOne($picId);
+				if (empty($picInfo)) {
+					return false;
+				}
+			} else {
+				$picInfo = new Arts();
+				$picInfo->create_at = date('Y-m-d H:i:s');
+			}
+
+			$picInfo->art_title = $picName;
+			$picInfo->art_no = $artNo;	//图片编号 类型+编号
+			$picInfo->art_sort = $artSort;	//图片排序
+			$picInfo->author_id = $authorId;
+			$picInfo->birth_at = $birthAt;
+			$picInfo->art_num = $artNum;
+			$picInfo->art_state = Arts::ART_STATE_USABLE;
+			$picInfo->market_price = $marketPrice;
+			$picInfo->current_price = $currentPrice;
+			$picInfo->show_image = $showImages;	//图片需要处理，需要上传缩略图、详情图、效果图，除缩略图其他可为空
+			$picInfo->art_class = $artClass;
+			$picInfo->art_style = $artStyle;
+			$picInfo->art_content = $artContent;
+			$picInfo->art_color = $artColor;
+			$picInfo->art_length = $length;
+			$picInfo->art_width = $width;
+			$picInfo->art_size = $size;	//计算详情图大小
+			$picInfo->art_dpi = $dpi;
+			$picInfo->mark = $mark; // 内容过滤
+			$picInfo->desc = $desc; // 内容过滤
+			$picInfo->save();
+			// 处理图片副表信息
+
+			// 记录操作行为
+			
+		} catch (Exception $e) {
+			\Yii::error($e->getMessage());
+			return false;
+		}
+		
+	}
 
 }
