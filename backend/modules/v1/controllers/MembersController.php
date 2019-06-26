@@ -24,6 +24,7 @@ class MembersController extends ApiBaseController
      */
     public function actionOnLogin()
     {
+        
         return $this->success();
     }
 
@@ -137,9 +138,9 @@ class MembersController extends ApiBaseController
         $page = \Yii::$app->request->post('page',1);
         $limit = \Yii::$app->request->post('limit',20);
 
-        $offset = ($page - 1) * $limit;
         $count = $this->_memberSer->getAdminLogCount($adId);
         $pageInfo = $this->getPageInfo($page, $limit, $count);
+        $offset = ($pageInfo['page'] - 1) * $limit;
 
         $list = $this->_memberSer->getAdminLogList($limit, $offset);
         // 空返回
@@ -170,10 +171,15 @@ class MembersController extends ApiBaseController
     public function actionUserList()
     {
         $userName = \Yii::$app->request->post('userName','');
+        $phone = \Yii::$app->request->post('phone',0);
         $page = \Yii::$app->request->post('page','1');
         $limit = \Yii::$app->request->post('limit','20');
 
-        
+        $count = $this->_memberSer->getUsersCount($userName, $phone);
+        $pageInfo = $this->getPageInfo($page, $limit, $count);
+        $offset = ($pageInfo['page'] - 1) * $limit;
+
+        $list = $this->_memberSer->getUsersList($userName,$phone);
     }
 
     /**

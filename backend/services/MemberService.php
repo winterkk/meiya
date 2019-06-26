@@ -9,6 +9,7 @@ use common\services\CommonService;
 use common\models\Admins;
 use common\models\AdminsLog;
 use common\models\Authors;
+use common\models\Users;
 
 class MemberService extends CommonService
 {
@@ -81,5 +82,23 @@ class MemberService extends CommonService
 	public function getAuthorInfoById($authorId)
 	{
 		return Authors::find()->where(['author_state'=>Authors::AUTHOR_STATE_USABLE])->one();
+	}
+
+	/**
+	 * 用户数量统计
+	 * @param  $userName  名字筛选
+	 * @param  $phone  手机号筛选
+	 * @return  number
+	 */
+	public function getUsersCount($userName='',$phone=0)
+	{
+		$count = Users::find()->where(['>','user_state',Users::USER_STATE_DEL]);
+		if ($userName) {
+			$count->andWhere(['user_name'=>$userName]);
+		}
+		if ($phone) {
+			$count->andWhere(['user_phone'=>$phone]);
+		}
+		return $count->count();
 	}
 }
