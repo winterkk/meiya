@@ -8,7 +8,7 @@ return [
  //        ],
         // 'home' => 'v1/order/home',
         // 'show' => 'v2/default/show',
-        '/' => 'v1/art/show',
+        '/' => 'site/home',
         // '/pay/notify' => '/pay/show',
         //'v1/users/check-access/<username:\w+>/<password:\w+>' => 'v1/users/check-access',
         //GET方式传参接口

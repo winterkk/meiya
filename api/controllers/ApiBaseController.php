@@ -36,14 +36,9 @@ class ApiBaseController extends ActiveController
     	header("Access-Control-Allow-Methods:POST,GET");
     	header("Access-Control-Allow-Headers:x-requested-with,content-type,Authorization");
 
-        // free actions
-        $freeAction = ['login', 'on-login', 'show'];
-        if (in_array($action->id, $freeAction)) {
-            return true;
-        }
     	// token
     	$headers = \Yii::$app->request->headers;
-    	if ($headers->has('Authorization') && strlen($headers->get('Authorization')) > 0) {
+    	if ($headers->has('Authorization') && $headers->get('Authorization') != '') {
     		$token = $headers->get('Authorization');
     		if ($this->checkToken($token)) {
     			return true;
@@ -52,8 +47,8 @@ class ApiBaseController extends ActiveController
     		}
     	} else {
             // free actions
-            $freeActionOther = ['card-show', 'art-list', 'art-show'];
-            if (in_array($action->id, $freeActionOther)) {
+            $freeAction = ['login', 'on-login', 'home'];
+            if (in_array($action->id, $freeAction)) {
                 return true;
             } else {
                 $this->error('1001');
@@ -146,9 +141,9 @@ class ApiBaseController extends ActiveController
 		// jti：jwt的唯一身份标识，主要用来作为一次性token，从而回避重放攻击 
     	$time = time();
     	$body = [
-    		'iss' => 'jujube',
+    		'iss' => 'meiya',
     		'sub' => $userName,
-    		'aud' => 'jujube wechat app',
+    		'aud' => 'meiya wechat app',
     		'exp' => $time + 3600 * 24 * 30,
     		'nbf' => $time,
     		'iat' => $time,

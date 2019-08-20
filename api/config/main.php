@@ -14,12 +14,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => ['log'],
-    'modules' => [
-        'v1' => [
-            // 版本控制
-            'class' => 'api\modules\v1\Module'
-        ],
-    ],
+    // 'modules' => [
+    //     'v1' => [
+    //         // 版本控制
+    //         'class' => 'api\modules\v1\Module'
+    //     ],
+    // ],
      // 时区
     'charset' => 'utf-8',
     'language' => 'zh-CN',
