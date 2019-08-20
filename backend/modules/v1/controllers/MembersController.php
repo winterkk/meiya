@@ -24,8 +24,18 @@ class MembersController extends ApiBaseController
      */
     public function actionOnLogin()
     {
-        
-        return $this->success();
+        $account = \Yii::$app->request->post('account');
+        $passwd = \Yii::$app->request->post('passwd');
+        if (!$account || !$passwd) {
+            return $this->error('1001');
+        }
+        $res = $this->_memberSer->checkAdminLogin($account, $passwd);
+        if (!empty($res)) {
+            //返回登录信息
+            return $this->success();
+        } else {
+            return $this->error('账号密码错误');
+        }
     }
 
     /**

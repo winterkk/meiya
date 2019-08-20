@@ -101,4 +101,19 @@ class MemberService extends CommonService
 		}
 		return $count->count();
 	}
+
+	/**
+	 * 后台登录
+	 * @param  $account 
+	 * @param  $passwd
+	 */
+	public function checkAdminLogin($account,$passwd)
+	{
+		// 密码
+		$checkPasswd = CommonService::hashPasswd($passwd);
+		$adminInfo = Admins::find()
+			->where(['name'=>$account,'password'=>$checkPasswd,'state'=>Admins::ADMIN_STATE_USABLE])
+			->one();
+		return $adminInfo;
+	}
 }
