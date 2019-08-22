@@ -22,8 +22,11 @@ class SiteController extends ApiBaseController
     public function actionHome()
     {
         $src = '/www/php/meiya/api/web/images/lb.jpg';
+        $newSrc = '/www/php/meiya/api/web/images/lb-375.jpg';
+        Image::thumbnail($src,375,null)->save($newSrc,['quality'=>100]);
+        echo 'success';
         // banner
-        var_dump(file_get_contents($src));
+        
         // style
     }
 
