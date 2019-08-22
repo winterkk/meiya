@@ -4,7 +4,7 @@ namespace api\controllers;
 use Yii;
 use yii\web\Controller;
 use api\controllers\ApiBaseController;
-use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -21,10 +21,14 @@ class SiteController extends ApiBaseController
      */
     public function actionHome()
     {
-        $src = '/www/php/meiya/api/web/images/lb.jpg';
-        $newSrc = '/www/php/meiya/api/web/images/lb-375.jpg';
-        Image::thumbnail($src,375,null)->save($newSrc,['quality'=>100]);
-        echo 'success';
+        $upload = \Yii::$app->params['uploadPath'];
+        $img = UploadedFile::getInstanceByName('image');
+        $filename = $upload .'/'. date('Y').'/'.date('m');
+        if (!is_dir($filename)) {
+            @mkdir($filename, 0777, true);
+        }
+        $filename .= '/'.$img->name;
+        $img->saveAs($filename);
         // banner
         
         // style
