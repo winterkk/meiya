@@ -255,17 +255,15 @@ class CommonService
     	}
     	$starTime = strtotime($starDate);
     	// 下个自然月计算
-    	// $nextMonth = date('m',$starTime) + 1;
-    	// //当前月剩余时间
-    	// $nextMonthTime = strtotime(sprintf('%s-%s-01', date('Y') + floor($nextMonth / 12), $nextMonth % 12));
-    	// $limit =  $nextMonthTime - 24 * 3600 - $starTime;
-    	// // 月份
-    	// $months += $nextMonth;
-    	// $nexMonthsTime = strtotime(sprintf('%s-%s-01', date('Y') + floor($months / 12), $months % 12));
-    	// $time = $nexMonthsTime - 24 * 3600 - $limit;
+    	$nextMonth = date('m',$starTime) + 1;
+    	//当前月剩余时间
+    	$nextMonthTime = strtotime(sprintf('%s-%s-01', date('Y') + floor($nextMonth / 12), $nextMonth % 12));
+    	$limit =  $nextMonthTime - 24 * 3600 - $starTime;
+    	// 月份
+    	$months += $nextMonth;
+    	$nexMonthsTime = strtotime(sprintf('%s-%s-01', date('Y') + floor($months / 12), $months % 12));
+    	$time = $nexMonthsTime - 24 * 3600 - $limit;
 
-    	// 按每月31天计算
-    	$time = $starTime + $months * 31 * 24 * 3600;
     	return $time;
     }
 }
