@@ -11,6 +11,7 @@ use Yii;
  * @property string $path 图片地址
  * @property int $width 图片宽度
  * @property int $height 图片高度
+ * @property string $img_value 详情快照
  * @property string $create_at 创建时间
  * @property string $update_at 修改时间
  */
@@ -31,7 +32,7 @@ class Imgs extends \yii\db\ActiveRecord
     {
         return [
             [['path', 'create_at'], 'required'],
-            [['path'], 'string'],
+            [['path', 'img_value'], 'string'],
             [['width', 'height'], 'integer'],
             [['create_at', 'update_at'], 'safe'],
         ];
@@ -47,6 +48,7 @@ class Imgs extends \yii\db\ActiveRecord
             'path' => 'Path',
             'width' => 'Width',
             'height' => 'Height',
+            'img_value' => 'Img Value',
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];
