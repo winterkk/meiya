@@ -5,22 +5,22 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%admins_logs}}".
+ * This is the model class for table "{{%options}}".
  *
  * @property int $id
- * @property int $admin_id 管理员id
- * @property int $log_type 日志类型:1登录2登出3增加4修改5删除
- * @property string $content 日志内容
- * @property string $create_at 日志生成时间
+ * @property int $admin_id 操作人
+ * @property string $name 标题
+ * @property string $content 内容
+ * @property string $create_at 时间
  */
-class AdminsLogs extends \yii\db\ActiveRecord
+class Options extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%admins_logs}}';
+        return '{{%options}}';
     }
 
     /**
@@ -29,10 +29,11 @@ class AdminsLogs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['admin_id', 'log_type'], 'integer'],
+            [['admin_id'], 'integer'],
             [['content'], 'string'],
             [['create_at'], 'required'],
             [['create_at'], 'safe'],
+            [['name'], 'string', 'max' => 200],
         ];
     }
 
@@ -44,7 +45,7 @@ class AdminsLogs extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'admin_id' => 'Admin ID',
-            'log_type' => 'Log Type',
+            'name' => 'Name',
             'content' => 'Content',
             'create_at' => 'Create At',
         ];

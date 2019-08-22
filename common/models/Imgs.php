@@ -5,24 +5,23 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%users_historys}}".
+ * This is the model class for table "{{%imgs}}".
  *
  * @property int $id
- * @property int $user_id 用户
- * @property int $pic_id 画作
- * @property string $history_value 内容
- * @property int $state 状态1可用0删除2不显示
+ * @property string $path 图片地址
+ * @property int $width 图片宽度
+ * @property int $height 图片高度
  * @property string $create_at 创建时间
  * @property string $update_at 修改时间
  */
-class UsersHistorys extends \yii\db\ActiveRecord
+class Imgs extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%users_historys}}';
+        return '{{%imgs}}';
     }
 
     /**
@@ -31,9 +30,9 @@ class UsersHistorys extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'pic_id', 'state'], 'integer'],
-            [['history_value'], 'string'],
-            [['create_at'], 'required'],
+            [['path', 'create_at'], 'required'],
+            [['path'], 'string'],
+            [['width', 'height'], 'integer'],
             [['create_at', 'update_at'], 'safe'],
         ];
     }
@@ -45,10 +44,9 @@ class UsersHistorys extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'pic_id' => 'Pic ID',
-            'history_value' => 'History Value',
-            'state' => 'State',
+            'path' => 'Path',
+            'width' => 'Width',
+            'height' => 'Height',
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];

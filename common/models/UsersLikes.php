@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "{{%users_likes}}".
  *
  * @property int $id
- * @property int $user_id 用户id
- * @property int $art_id 艺术品id
+ * @property int $user_id 用户
+ * @property int $pic_id 画作
  * @property int $like_state 0删除1可用
  * @property string $create_at 添加时间
  * @property string $update_at 修改时间
@@ -30,7 +30,7 @@ class UsersLikes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'art_id', 'like_state'], 'integer'],
+            [['user_id', 'pic_id', 'like_state'], 'integer'],
             [['create_at'], 'required'],
             [['create_at', 'update_at'], 'safe'],
         ];
@@ -44,7 +44,7 @@ class UsersLikes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'art_id' => 'Art ID',
+            'pic_id' => 'Pic ID',
             'like_state' => 'Like State',
             'create_at' => 'Create At',
             'update_at' => 'Update At',

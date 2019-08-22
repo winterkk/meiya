@@ -26,15 +26,6 @@ use Yii;
  */
 class Authors extends \yii\db\ActiveRecord
 {
-    const AUTHOR_STATE_USABLE = 1;
-    const AUTHOR_STATE_DISABLE = 2;
-    const AUTHOR_STATE_DEL = 0;
-
-    public $authorStateNameBox = [
-        AUTHOR_STATE_DEL => '删除',
-        AUTHOR_STATE_USABLE => '可用',
-        AUTHOR_STATE_DISABLE => '禁用'
-    ];
     /**
      * {@inheritdoc}
      */

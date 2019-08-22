@@ -23,15 +23,6 @@ use Yii;
  */
 class Admins extends \yii\db\ActiveRecord
 {
-    const ADMIN_STATE_DEL = 0;
-    const ADMIN_STATE_USABLE = 1;
-    const ADMIN_STATE_LOCK = 2;
-
-    public $stateName = [
-        0 => '删除',
-        1 => '正常',
-        2 => '禁用',
-    ];
     /**
      * {@inheritdoc}
      */

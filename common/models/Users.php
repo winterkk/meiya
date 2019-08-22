@@ -17,7 +17,7 @@ use Yii;
  * @property string $user_photo 头像
  * @property string $user_birth 出生日期
  * @property int $user_sex 性别:1男2女3保密
- * @property int $user_state 状态:1正常0删除2冻结
+ * @property int $user_state 状态:1正常0删除
  * @property string $token_key token验证key
  * @property string $wechat_openid 微信openid
  * @property int $city 城市id
@@ -36,15 +36,6 @@ use Yii;
  */
 class Users extends \yii\db\ActiveRecord
 {
-    const USER_STATE_DEL = 0;
-    const USER_STATE_USABLE = 1;
-    const USER_STATE_LOCK = 2;
-
-    public $userStateNameBox = [
-        self::USER_STATE_DEL => '删除',
-        self::USER_STATE_USABLE => '正常',
-        self::USER_STATE_LOCK => '冻结'
-    ];
     /**
      * {@inheritdoc}
      */
