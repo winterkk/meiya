@@ -4,6 +4,7 @@ namespace api\controllers;
 use Yii;
 use yii\web\Controller;
 use api\controllers\ApiBaseController;
+use common\services\UploadService;
 
 /**
  * Site controller
@@ -20,7 +21,8 @@ class SiteController extends ApiBaseController
      */
     public function actionHome()
     {
-        
+        //UploadService::singleUpload('image');
+        echo '1111';
         // banner
         
         // style

@@ -15,7 +15,7 @@ class UploadService
 	 * 单文件上传
 	 * @param  $fileName
 	 */
-	public function singleUpload($fileName)
+	public static function singleUpload($fileName)
 	{
 		try {
 			$upload = \Yii::$app->params['upload']['image'];
@@ -47,7 +47,7 @@ class UploadService
 	 * 多文件上传
 	 * @param  $fileName
 	 */
-	public function moreUpload($fileName)
+	public static function moreUpload($fileName)
 	{
 		try {
 			$upload = \Yii::$app->params['upload']['image'];
