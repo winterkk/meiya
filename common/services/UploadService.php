@@ -18,7 +18,7 @@ class UploadService
 	public function singleUpload($fileName)
 	{
 		try {
-			$upload = \Yii::$app->params['uploadPath'];
+			$upload = \Yii::$app->params['upload']['image'];
 			if (!$upload) {
 				throw new Exception("文件保存路径错误！", 1);
 			}
@@ -50,7 +50,7 @@ class UploadService
 	public function moreUpload($fileName)
 	{
 		try {
-			$upload = \Yii::$app->params['uploadPath'];
+			$upload = \Yii::$app->params['upload']['image'];
 			if (!$upload) {
 				throw new Exception("文件保存路径错误！", 1);
 			}
