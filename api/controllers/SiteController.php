@@ -22,7 +22,9 @@ class SiteController extends ApiBaseController
     public function actionHome()
     {
         //UploadService::singleUpload('image');
-        echo '1111';
+        $img = \Yii::$app->params['upload']['imageUrl'].'2019/08/zhhs.jpg';
+        // http://local.img.my.com/images/2019/08/zhhs.jpg
+        echo '<img src="'.$img.'">';
         // banner
         
         // style

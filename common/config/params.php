@@ -8,6 +8,8 @@ return [
     'upload' => [
         //'path' => Yii::getAlias('@base/web/storage/image/'), // 服务器解析到/web/目录时，上传到这里
         'image' => Yii::getAlias('@storage/web/images/'),
-        'file' => Yii::getAlias('@storage/web/files'),
+        'file' => Yii::getAlias('@storage/web/files/'),
+        'imageUrl' => Yii::getAlias('@storageUrl/images/')
     ],
+
 ];

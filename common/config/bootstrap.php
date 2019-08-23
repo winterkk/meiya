@@ -5,3 +5,6 @@ Yii::setAlias('@backend', dirname(dirname(__DIR__)) . '/backend');
 Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/api');
 Yii::setAlias('@storage', dirname(dirname(__DIR__)) . '/storage'); //存储目录path
+
+
+Yii::setAlias('@storageUrl', 'http://local.img.my.com/'); //存储url
