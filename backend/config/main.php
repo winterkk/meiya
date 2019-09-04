@@ -13,6 +13,8 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    // 默认路由
+    'defaultRoute' => 'admin/index',
     'modules' => [
         'v1' => [
             'class' => 'backend\modules\v1\Module',
