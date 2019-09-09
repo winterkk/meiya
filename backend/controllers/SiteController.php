@@ -11,7 +11,7 @@ use common\models\Users;
  */
 class SiteController extends Controller
 {
-    
+
     /**
      * Displays homepage.
      *
