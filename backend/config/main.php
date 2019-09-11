@@ -40,6 +40,7 @@ return [
             'csrfParam' => '_csrf-backend',
             // 验证cookie
             'enableCookieValidation' => true,
+            'enableCsrfValidation' => false
             // 优先接收json数据
             // 'parsers' => [
             //     'application/json' => 'yii\web\JsonParser',
