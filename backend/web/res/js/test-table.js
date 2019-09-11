@@ -9,7 +9,7 @@ layui.config({
 		method: 'post',
 		height : 312,
 		cellMinWidth: 80,	//全局定义单元格最小宽度
-		url : 'default/index',
+		url : 'admin/default/index',
 		page : true,
 		cols : [[
 			//表头
