@@ -11,6 +11,8 @@ use yii\web\Response;
  */
 class DefaultController extends Controller
 {
+	public $enableCsrfValidation = false;
+	
     /**
      * Renders the index view for the module
      * @return string
