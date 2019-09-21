@@ -24,7 +24,9 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "yiisoft/yii2-imagine": "^2.2",
-        "2amigos/qrcode-library": "^1.1"
+        "2amigos/qrcode-library": "^1.1",
+        "phpoffice/phpspreadsheet": "^1.9",
+        "mpdf/mpdf": "^8.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -46,7 +48,7 @@
         },
         "packagist": {
             "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
+            "url": "https://mirrors.aliyun.com/composer/"
         }
     }
 }
