@@ -5,14 +5,32 @@ namespace backend\modules\admin\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
+use backend\components\NoCsrf;
 
 /**
  * Default controller for the `admin` module
  */
 class DefaultController extends Controller
 {
-	public $enableCsrfValidation = false;
 	
+    /**
+     * 在单独的action中关闭csrf验证
+     */
+    public function behaviors()
+    {
+        return [
+            'csrf' => [
+                'class' => NoCsrf::className(),
+                'controller' => $this,
+                'actions' => [
+                    // 关闭验证的action
+                    'index',
+                    'default'
+                ]
+            ]
+        ];
+    }
+
     /**
      * Renders the index view for the module
      * @return string
