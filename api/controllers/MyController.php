@@ -3,9 +3,9 @@ namespace api\controllers;
 
 use Yii;
 use yii\web\Controller;
-use api\controllers\ApiBaseController;
+use api\controllers\BaseController;
 
-class MyController extends ApiBaseController
+class MyController extends BaseController
 {
 	// close model
     public $modelClass = false;

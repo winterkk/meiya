@@ -47,7 +47,7 @@ class ApiBaseController extends ActiveController
     		}
     	} else {
             // free actions
-            $freeAction = ['login', 'on-login', 'home'];
+            $freeAction = ['login', 'on-login', 'default'];
             if (in_array($action->id, $freeAction)) {
                 return true;
             } else {

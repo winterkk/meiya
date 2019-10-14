@@ -12,7 +12,7 @@ use yii\web\Response;
 /**
  * Default controller for the `modules` module
  */
-class ApiBaseController extends ActiveController
+class BaseController extends ActiveController
 {
     public $actions = [];
 
