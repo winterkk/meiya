@@ -3,13 +3,13 @@ namespace api\controllers;
 
 use Yii;
 use yii\web\Controller;
-use api\controllers\ApiBaseController;
+use api\controllers\BaseController;
 use common\services\UploadService;
 
 /**
  * Site controller
  */
-class SiteController extends ApiBaseController
+class SiteController extends BaseController
 {
     // close model
     public $modelClass = false;
