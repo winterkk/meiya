@@ -23,7 +23,7 @@ class UploadService
 				throw new Exception("文件保存路径错误！", 1);
 			}
 			$img = UploadedFile::getInstanceByName($fileName);
-			$dirPath = $upload .'/'. date('Y').'/'.date('m');
+			$dirPath = $upload . date('Y').'/'.date('m');
 			// 递归创建文件夹
 			if (!is_dir($dirPath)) {
 	            @mkdir($dirPath, 0777, true);

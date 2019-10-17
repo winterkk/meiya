@@ -4,7 +4,7 @@ namespace api\controllers;
 use Yii;
 use yii\web\Controller;
 use api\controllers\BaseController;
-use common\services\UploadService;
+use api\models\ApiArtClasses;
 
 /**
  * Site controller
@@ -21,13 +21,10 @@ class SiteController extends BaseController
      */
     public function actionDefault()
     {
-        //UploadService::singleUpload('image');
-        $img = \Yii::$app->params['upload']['imageUrl'].'2019/08/zhhs.jpg';
-        // http://local.img.my.com/images/2019/08/zhhs.jpg
-        echo '<img src="'.$img.'">';
-        // banner
-        
-        // style
+        // class
+        $_classes = new ApiArtClasses();
+        $classes = $_classes->getArtClasses();
+        return $this->success('查询成功！',$classes);
     }
 
     /**

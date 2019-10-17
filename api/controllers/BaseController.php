@@ -54,7 +54,7 @@ class BaseController extends ActiveController
             $this->error('1001');
         }
     	
-    	return false;
+    	return $this->error(404,'页面不存在');
     }
 
     /**

@@ -47,17 +47,25 @@ class CommonService
 	 * @param  $path  相对路径
 	 * @return  $url
 	 */
-	public static function getImageUrl($path)
+	public static function getImageUrl($path, $host='')
 	{
+		if (!$path) {
+			return $path;
+		}
+		// 自定义
+		if (!$host) {
+			return $host . $path;
+		}
+		// 系统定义
 		if (substr($path, 0, 4) == 'http') {
 			$url = $path;
 		} else {
-			$host = \Yii::$app->request->getHostInfo();
+			$baseHost = \Yii::$app->request->getHostInfo();
 			$paramHost = isset(\Yii::$app->params['imageHost']) ? \Yii::$app->params['imageHost'] : '';
-			if (($host != $paramHost) && ($paramHost != '')) {
+			if (($baseHost != $paramHost) && ($paramHost != '')) {
 				$url = $paramHost . $path;
 			} else {
-				$url = $host . $path;
+				$url = $baseHost . $path;
 			}
 		}
 		return $url;
