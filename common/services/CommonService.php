@@ -45,6 +45,7 @@ class CommonService
 	/**
 	 * 获取图片的完整地址
 	 * @param  $path  相对路径
+	 * @param  $host  自定义host
 	 * @return  $url
 	 */
 	public static function getImageUrl($path, $host='')
@@ -73,16 +74,20 @@ class CommonService
 
 	/**
 	 * 获取图片相对路径
-	 * @param  $url
+	 * @param  $url  图片地址
+	 * @param  $host  自定义host
 	 * @return  $path
 	 */
-	public static function getImagePath($url)
+	public static function getImagePath($url, $host='')
 	{
-		$host = \Yii::$app->request->getHostInfo();
-		$paramHost = isset(\Yii::$app->params['imageHost']) ? \Yii::$app->params['imageHost'] : '';
-		if (($host != $paramHost) && ($paramHost != '')) {
-			$host = $paramHost;
-		} 
+		if (!$host) {
+			$host = \Yii::$app->request->getHostInfo();
+			$paramHost = isset(\Yii::$app->params['imageHost']) ? \Yii::$app->params['imageHost'] : '';
+			if (($host != $paramHost) && ($paramHost != '')) {
+				$host = $paramHost;
+			} 
+		}
+
 		$pos = strpos($url, $host);
 		if ($pos === false) {
 			$path = $url;
