@@ -39,21 +39,21 @@ class BaseController extends ActiveController
     	// token
     	$headers = \Yii::$app->request->headers;
     	if ($headers->has('Authorization') && $headers->get('Authorization') != '') {
-    		$token = $headers->get('Authorization');
-    		if ($this->checkToken($token)) {
+    		if ($this->checkToken($headers->get('Authorization'))) {
     			return true;
     		} else {
     			$this->error('1002');
     		}
-    	} else {
-            // free actions
-            $freeAction = ['login', 'on-login', 'default'];
-            if (in_array($action->id, $freeAction)) {
-                return true;
-            } else {
-                $this->error('1001');
-            }
-    	}
+    	} 
+
+        // free actions
+        $freeAction = ['login', 'on-login', 'default'];
+        if (in_array($action->id, $freeAction)) {
+            return true;
+        } else {
+            $this->error('1001');
+        }
+    	
     	return false;
     }
 
@@ -72,23 +72,21 @@ class BaseController extends ActiveController
      * @param  $datra
      * @date  2018-11
      */
-    public function success($data=[])
+    public function success($msg = '成功', $data=[])
     {
-    	return $this->jsonResponse('200', $data);
+    	return $this->jsonResponse('200', $msg ,$data);
     }
 
     /**
      * error
      * @param  $code
      */
-    public function error($code='1001',$data=[])
+    public function error($code='1001', $msg = 'error', $data=[])
     {
-        if (empty($data)) {
-            return $this->jsonResponse($code, $this->errorMsg($code));
-        } else {
-            return $this->jsonResponse($code, $data);
+        if ($msg !== 'error') {
+            $msg = $this->errorMsg($code);
         }
-    	
+        return $this->jsonResponse($code, $msg, $data);
     }
 
     /**
@@ -97,11 +95,11 @@ class BaseController extends ActiveController
      * @param  $data  返回数据
      * @return  json
      */
-    protected function jsonResponse($code, $data)
+    protected function jsonResponse($code, $msg, $data)
     {
     	$resp = \Yii::$app->response;
     	$resp->format = Response::FORMAT_JSON;
-    	$resp->data = ['code' => $code, 'info' => $data];
+    	$resp->data = ['code' => $code, 'msg'=> $msg,'data' => $data];
     	return $resp;
     }
 
