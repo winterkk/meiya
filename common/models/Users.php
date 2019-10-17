@@ -26,6 +26,7 @@ use Yii;
  * @property string $questions 找回问题
  * @property string $answer 答案
  * @property int $state 状态:1正常0删除
+ * @property int $is_set 是否授权
  * @property string $update_at 修改时间
  */
 class Users extends \yii\db\ActiveRecord
@@ -45,7 +46,7 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             [['birth', 'reg_at', 'last_login_at', 'update_at'], 'safe'],
-            [['sex', 'state'], 'integer'],
+            [['sex', 'state', 'is_set'], 'integer'],
             [['reg_at', 'last_login_at', 'answer'], 'required'],
             [['answer'], 'string'],
             [['nickname', 'realname', 'wechat_openid'], 'string', 'max' => 50],
@@ -81,6 +82,7 @@ class Users extends \yii\db\ActiveRecord
             'questions' => 'Questions',
             'answer' => 'Answer',
             'state' => 'State',
+            'is_set' => 'Is Set',
             'update_at' => 'Update At',
         ];
     }
