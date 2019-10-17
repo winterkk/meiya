@@ -12,8 +12,7 @@ class MyController extends BaseController
 
     /**
      * login
-     *
-     *
+     * 
      */
     public function actionLogin()
     {
