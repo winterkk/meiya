@@ -16,7 +16,7 @@ return [
 			'charset' => 'utf8mb4',
 			'tablePrefix' => 'my_',
 			'attributes' => [
-				// 使用更小的链接超时
+				// 使用更小的链接超时 
 				PDO::ATTR_TIMEOUT => 10,
 			],
 		],
