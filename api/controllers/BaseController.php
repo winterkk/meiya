@@ -121,10 +121,9 @@ class BaseController extends ActiveController
     /**
      * token生成
      * @param  $userId
-     * @param  $userName
      * @param  $type  加密方式
      */
-    protected function setToken($userId, $userName, $type='sha256')
+    protected function setToken($userId, $type='sha256')
     {
     	// header
     	$headerJson = $this->getJWTheader($type);
@@ -140,7 +139,7 @@ class BaseController extends ActiveController
     	$time = time();
     	$body = [
     		'iss' => 'meiya',
-    		'sub' => $userName,
+    		'sub' => 'meiya user',
     		'aud' => 'meiya wechat app',
     		'exp' => $time + 3600 * 24 * 30,
     		'nbf' => $time,
@@ -182,7 +181,6 @@ class BaseController extends ActiveController
     			return false;	//超时
     		}
     		$_POST['userId'] = $body['jti'];
-    		$_POST['userName'] = $body['sub'];
     		return true;
     	}
     }

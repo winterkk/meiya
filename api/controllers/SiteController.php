@@ -19,7 +19,7 @@ class SiteController extends BaseController
      * 
      * @return 
      */
-    public function actionHome()
+    public function actionDefault()
     {
         //UploadService::singleUpload('image');
         $img = \Yii::$app->params['upload']['imageUrl'].'2019/08/zhhs.jpg';
