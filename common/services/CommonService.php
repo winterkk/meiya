@@ -98,6 +98,44 @@ class CommonService
 	}
 
 	/**
+	 * 多级菜单
+	 * @param  $list  一维数组
+	 * @param  $pk  主键id
+	 * @param  $pid  父级
+	 * @param  $child  子级别
+	 * @param  $level  级别
+	 */
+	public static function makeTree($list, $pk='id', $pid='pid', $child='_child', $level=0)
+	{
+		// 递归
+		// $tree = [];
+		// foreach ($list as $key => $value) {
+		// 	if ($value[$pid] == $level) {
+		// 		$tree[$value[$pk]] = $value;
+		// 		unset($list[$key]);
+		// 		$tree[$value[$pk]][$child] = self::makeTree($list,$pk,$pid,$child,$value[$pk]);
+
+		// 	}
+		// }
+
+		// 引用
+  		$tree = [];
+  		$data = [];
+  		foreach ($list as $key => $value) {
+  			$data[$value[$pk]] = $value;
+  		}
+  		foreach ($data as $key => $value) {
+  			$root = $value[$pid];
+  			if ($root == $level) {
+  				$tree[] = &$data[$key];
+  			} else {
+  				$data[$root][$child][] = &$data[$key];
+  			}
+  		}
+		return $tree;
+	}
+
+	/**
 	 * 输入内容简单过滤
 	 * @param  max
 	 * @return  max
