@@ -6,6 +6,7 @@
 namespace common\services;
 
 use Yii;
+use common\services\ImageProcessService;
 
 class CommonService
 {
@@ -134,6 +135,78 @@ class CommonService
   		}
 		return $tree;
 	}
+
+	/**
+	 * 生成缩略图
+	 * @param  $image  上传文件名
+	 * @param  $w  缩略图保存宽度
+	 * @param  $saveImgFile  是否保留原图
+	 * @return  array
+	 */
+	public static function setImgThumb($image, $w = [150,300,768,1024], $saveImgFile = true)
+	{
+		if (!$_FILES[$image] || empty($w)) {
+			return [];
+		}
+		$image = $_FILES[$image];
+		$type = $image['type'];
+		$tmpFile = $image['tmp_name'];
+		$fullName = $image['name'];
+		$name = strstr($fullName, '.', true);
+		$suffix = strstr($fullName, '.');
+
+		// 压缩比率
+		list($width, $height, $typeNumber, $attr) = getimagesize($tmpFile);
+		$scale = $height / $width;
+		$h = [];
+		sort($w);
+		foreach ($w as $key => $value) {
+			if ($value < 300) {
+				$h[$key] = $value;
+			} else {
+				$h[$key] = ceil($value * $scale);
+			}
+		}
+
+		// save path
+		$upload = \Yii::$app->params['upload']['image'];
+		$path =  date('Y') . '/' . date('m') . '/' . date('d');
+		$dirPath = $upload . $path;
+		if (!is_dir($dirPath)) {
+			@mkdir($dirPath, 0777, true);
+		}
+
+		// thumb
+		foreach ($w as $k => $v) {
+			$fileName = $name . '-' . $v . 'x' . $h[$k] . $suffix;
+			$saveImg = $dirPath . '/' . $fileName;
+			ImageProcessService::imgThumb($tmpFile, $saveImg, $v, $h[$k], 'outbound');
+			$thumb[] = [
+				'width' => $v,
+				'height' => $h[$k],
+				'file' => $path . '/' . $fileName,
+				'type' => $type 
+			];
+		}
+
+		// 保存原图
+		if ($saveImgFile) {
+			$saveImage = $dirPath . '/' . $fullName;
+			move_uploaded_file($tmpFile, $saveImage);
+			$thumb['master'] = [
+				'width' => $width,
+				'height' => $height,
+				'file' => $path . '/' . $fullName,
+				'type' => $type
+			];
+		}
+
+		// response
+		return $thumb;
+	}
+
+
+
 
 	/**
 	 * 输入内容简单过滤

@@ -22,71 +22,7 @@ class SiteController extends BaseController
      */
     public function actionDefault()
     {
-        $list = [
-            [
-                'id' => 1,
-                'titile' => 't1',
-                'pid' => 0
-            ],
-            [
-                'id' => 2,
-                'titile' => 't2',
-                'pid' => 0
-            ],
-            [
-                'id' => 3,
-                'titile' => 't3',
-                'pid' => 1
-            ],
-            [
-                'id' => 4,
-                'titile' => 't4',
-                'pid' => 1
-            ],
-            [
-                'id' => 5,
-                'titile' => 't5',
-                'pid' => 2
-            ],
-            [
-                'id' => 6,
-                'titile' => 't6',
-                'pid' => 2
-            ],
-            [
-                'id' => 7,
-                'titile' => 't7',
-                'pid' => 3
-            ],
-            [
-                'id' => 8,
-                'titile' => 't8',
-                'pid' => 7
-            ],
-            [
-                'id' => 9,
-                'titile' => 't5',
-                'pid' => 8
-            ],
-            [
-                'id' => 10,
-                'titile' => 't6',
-                'pid' => 9
-            ],
-            [
-                'id' =>11,
-                'titile' => 't7',
-                'pid' => 10
-            ],
-            [
-                'id' => 12,
-                'titile' => 't8',
-                'pid' => 11
-            ]
-        ];
-        $tree = CommonService::makeTree($list);
-        echo '<pre>';
-        print_r($tree);exit;
+
     }
 
     /**
