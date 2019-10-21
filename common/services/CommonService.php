@@ -185,7 +185,8 @@ class CommonService
 				'width' => $v,
 				'height' => $h[$k],
 				'file' => $path . '/' . $fileName,
-				'type' => $type 
+				'type' => $type,
+				'md5' => self::md5file($saveImg)
 			];
 		}
 
@@ -197,7 +198,8 @@ class CommonService
 				'width' => $width,
 				'height' => $height,
 				'file' => $path . '/' . $fullName,
-				'type' => $type
+				'type' => $type,
+				'md5' => self::md5file($saveImage)
 			];
 		}
 
@@ -205,7 +207,14 @@ class CommonService
 		return $thumb;
 	}
 
-
+	/**
+	 * 对文本文件的md5散列
+	 * @param  $filename  文件路径
+	 */
+	public static function md5file($filename)
+	{
+		return md5_file($filename);
+	}
 
 
 	/**

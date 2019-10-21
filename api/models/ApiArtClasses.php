@@ -6,6 +6,9 @@ use yii\db\Exception;
 use common\models\ArtsClasses;
 use common\services\CommonService;
 
+/**
+ * 分类
+ */
 class ApiArtClasses extends ArtsClasses
 {
 	const CLASS_DELETE = 0;
@@ -17,7 +20,7 @@ class ApiArtClasses extends ArtsClasses
 	public function getArtClasses()
 	{
 		$cache = \Yii::$app->cache;
-		$key = 'ART_CLASS_ARR';
+		$key = 'ART_CLASS_SET';
 		$classes = $cache->get($key);
 		if ($classes === false) {
 			$items = self::find()->from(['c'=>self::tableName()])

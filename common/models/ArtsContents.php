@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Imgs;
 
 /**
  * This is the model class for table "{{%arts_contents}}".
@@ -57,5 +58,10 @@ class ArtsContents extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];
+    }
+
+    public function getContentImg()
+    {
+        return $this->hasOne(Imgs::className(),['id'=>'cover_img']);
     }
 }

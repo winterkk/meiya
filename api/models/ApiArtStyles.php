@@ -6,6 +6,9 @@ use yii\db\Exception;
 use common\models\ArtsStyles;
 use common\services\CommonService;
 
+/**
+ * 风格分类
+ */
 class ApiArtStyles extends ArtsStyles
 {
 	// 状态常量
@@ -19,7 +22,7 @@ class ApiArtStyles extends ArtsStyles
 	public function getArtStyles()
 	{
 		$cache = \Yii::$app->cache;
-		$key = "ART_STYLE_ARR";
+		$key = "ART_STYLE_SET";
 		$styles = $cache->get($key);
 		if ($styles === false) {
 			$list = self::find()->from(['s'=>self::tableName()])

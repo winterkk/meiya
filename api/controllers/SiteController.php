@@ -2,10 +2,10 @@
 namespace api\controllers;
 
 use Yii;
-use yii\web\Controller;
 use api\controllers\BaseController;
 use api\models\ApiArtClasses;
 use api\models\ApiArtStyles;
+use api\models\ApiArtContents;
 use common\services\CommonService;
 
 /**
@@ -22,12 +22,12 @@ class SiteController extends BaseController
      */
     public function actionDefault()
     {
-
+        $thumb = CommonService::setImgThumb('image');
+        var_dump($thumb);
     }
 
     /**
-     *
-     *
+     * 分类
      */
     public function actionClasses()
     {
@@ -37,19 +37,41 @@ class SiteController extends BaseController
     }
 
     /**
-     * 风格
+     * 某一分类下风格
      */
     public function actionStyles()
     {
         $request = \Yii::$app->request;
         $classId = $request->post('classId');
-        if ($classId) {
-            $_style = new ApiArtStyles();
-            $styles = $_style->getArtClassStyles($classId);
-        } else {
-            $styles = [];
+        if (!$classId) {
+            return $this->error('10001','查询失败！');
         }
-        return $this->success('查询成功！', $styles);
+        
+        // 分类下风格
+        $_style = new ApiArtStyles();
+        $styles = $_style->getArtClassStyles($classId);
+
+        // arts list
+        $_art = new ApiArts();
+        $count = $_art->getArtCount($classId);
+        $arts = $_art->getArtList();
+        return $this->success('查询成功！', ['styles'=>$styles,'items'=>$items]);
+    }
+
+    /**
+     * 某一风格下内容
+     */
+    public function actionContents()
+    {
+        $request = \Yii::$app->request;
+        $styleId = $request->post('styleId');
+        if ($styleId) {
+            $_cont = new ApiArtContents();
+            $contents = $_cont->getArtStyleContents($styleId);
+        } else {
+            $contents = [];
+        }
+        return $this->success('查询成功！',$contents);
     }
 
     /**

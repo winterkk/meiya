@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use common\models\ArtsClasses;
+use common\models\ArtsStyles;
+use common\models\ArtsContents;
+use common\models\ArtsColorsRels;
 
 /**
  * This is the model class for table "{{%arts}}".
@@ -87,5 +91,37 @@ class Arts extends \yii\db\ActiveRecord
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];
+    }
+
+    /**
+     * 关联类型
+     */
+    public function getArtsClasses()
+    {
+        return $this->hasOne(ArtsClasses::className(),['id'=>'class_id']);
+    }
+
+    /**
+     * 关联风格
+     */
+    public function getArtsStyles()
+    {
+        return $this->hasOne(ArtsStyles::className(),['id'=>'style_id']);
+    }
+
+    /**
+     * 关联内容
+     */
+    public function getArtsContents()
+    {
+        return $this->hasOne(ArtsContents::className(),['id'=>'cont_id']);
+    }
+
+    /**
+     * 关联颜色，一对多
+     */
+    public function getArtsColors()
+    {
+        return $this->hasMany(ArtsColorsRels::className(),['art_id'=>'id']);
     }
 }
