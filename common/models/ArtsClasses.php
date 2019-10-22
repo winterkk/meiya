@@ -65,4 +65,12 @@ class ArtsClasses extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Imgs::className(),['id' => 'cover_img']);
     }
+
+    /**
+     * 获取分类信息
+     */
+    public static function getClassIdentity($id)
+    {
+        return self::findOne($id);
+    }
 }

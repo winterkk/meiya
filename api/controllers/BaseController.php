@@ -193,4 +193,45 @@ class BaseController extends ActiveController
     {
     	return json_encode(['typ'=>'JWT','alg'=>$type]);
     }
+
+    /**
+     * 分页信息
+     * @param  $page
+     * @param  $limit
+     * @param  $count
+     */
+    public function getPageInfo($page=1, $limit=20, $count=0)
+    {
+        $page = $page > 0 ? floor($page) : 1;
+        $limit = $limit > 0 ? floor($limit) : 20;
+        // 获取总数
+        if ($count <= 0) {
+            $count = 0;
+        }
+        $pageCount = ceil( $count / $limit );
+        if ($pageCount < 1) {
+            $pageCount = 1;
+        }
+        $nextPage = $page + 1;
+        if ($pageCount <= $nextPage) {
+            $nextPage = $pageCount;
+        }
+        $prePage = $page - 1;
+        if ($prePage < 1) {
+            $prePage = 1;
+        }
+        if ($page >= $nextPage) {
+            $page = $nextPage;
+        }
+        if ($page <= $prePage) {
+            $prePage = $page;
+        }
+        $data = [
+            'page' => $page,
+            'limit' => $limit,
+            'nextPage' => $nextPage,
+            'prePage' => $prePage
+        ];
+        return $data;
+    }
 }

@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\Imgs;
+use common\models\ArtsStyles;
 
 /**
  * This is the model class for table "{{%arts_contents}}".
@@ -60,8 +61,19 @@ class ArtsContents extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 封面
+     */
     public function getContentImg()
     {
         return $this->hasOne(Imgs::className(),['id'=>'cover_img']);
+    }
+
+    /**
+     * 内容关联样式
+     */
+    public function getArtsStyles()
+    {
+        return $this->hasOne(ArtsStyles::className(),['id'=>'style_id']);
     }
 }

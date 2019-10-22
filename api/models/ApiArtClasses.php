@@ -13,6 +13,7 @@ class ApiArtClasses extends ArtsClasses
 {
 	const CLASS_DELETE = 0;
 	const CLASS_USEFUL = 1;
+
 	/**
 	 * 分类信息
 	 * @date  2019-10
@@ -42,5 +43,18 @@ class ApiArtClasses extends ArtsClasses
 			}
 		}
 		return $classes;
+	}
+
+	/**
+	 * 类型分类导航
+	 */
+	public function getClassNav($id)
+	{
+		$info = self::getClassIdentity($id);
+		$path = [];
+		if (!empty($info)) {
+			$path = ['classId'=>$id, 'classTitle'=>$info->title];
+		}
+		return $path;
 	}
 }

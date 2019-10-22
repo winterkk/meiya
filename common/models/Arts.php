@@ -7,6 +7,7 @@ use common\models\ArtsClasses;
 use common\models\ArtsStyles;
 use common\models\ArtsContents;
 use common\models\ArtsColorsRels;
+use common\models\Imgs;
 
 /**
  * This is the model class for table "{{%arts}}".
@@ -120,8 +121,16 @@ class Arts extends \yii\db\ActiveRecord
     /**
      * 关联颜色，一对多
      */
-    public function getArtsColors()
+    public function getArtsColorsRels()
     {
         return $this->hasMany(ArtsColorsRels::className(),['art_id'=>'id']);
+    }
+
+    /**
+     * 封面
+     */
+    public function getCoverImg()
+    {
+        return $this->hasOne(Imgs::className(),['id'=>'cover_img']);
     }
 }

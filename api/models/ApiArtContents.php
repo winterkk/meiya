@@ -65,4 +65,31 @@ class ApiArtContents extends ArtsContents
 		}
 		return $arr;
 	}
+
+	/**
+	 * 内容导航
+	 */
+	public function getContentNav($id)
+	{
+		$info = self::find()->from(['c'=>self::tableName()])
+			->joinWith(['artsStyles s'=>function($q){
+				$q->joinWith(['artsClasses']);
+			}])->one();
+		$path = [];
+		if (!empty($info)) {
+			$path = [
+				'classId' => $info->artsStyles->artsClasses->id,
+				'classTitle' => $info->artsStyles->artsClasses->title,
+				'_child' => [
+					'styleId' => $info->artsStyles->id,
+					'styleTitle' => $info->artsStyles->title,
+					'_child' => [
+						'contId' => $info->id,
+						'contTitle' => $info->title
+					]
+				]
+			];
+		}
+		return $path;
+	}
 }

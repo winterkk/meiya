@@ -65,4 +65,24 @@ class ApiArtStyles extends ArtsStyles
 		}
 		return $arr;
 	}
+
+	/** 
+	 * 样式导航
+	 */
+	public function getStyleNav($id)
+	{
+		$info = self::find()->from(['s'=>self::tableName()])->joinWith(['artsClasses c'])->one();
+		$path = [];
+		if (!empty($info) && !empty($info->artsClasses)) {
+			$path = [
+				'classId' => $info->artsClasses->id,
+				'classTitle' => $info->artsClasses->title,
+				'_child' => [
+					'styleId' => $info->id,
+					'styleTitle' => $info->title
+				]
+			];
+		}
+		return $path;
+	}
 }
