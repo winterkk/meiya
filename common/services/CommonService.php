@@ -143,7 +143,7 @@ class CommonService
 	 * @param  $saveImgFile  是否保留原图
 	 * @return  array
 	 */
-	public static function setImgThumb($image, $w = [150,300,768,1024], $saveImgFile = true)
+	public static function setImgThumb($image, $w = [236,320,768,1024], $saveImgFile = true)
 	{
 		if (!$_FILES[$image] || empty($w)) {
 			return [];

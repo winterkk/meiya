@@ -17,6 +17,10 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'db' => $db['db'],
+        // yii rbac
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
     ],
     'params' => $params,
 ];

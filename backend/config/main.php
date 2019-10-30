@@ -69,10 +69,6 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-            'defaultRoute' => ['guest'],
-        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false, // 是否执行严格的url解析

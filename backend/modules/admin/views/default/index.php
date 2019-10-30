@@ -17,6 +17,7 @@ LayuiAsset::register($this);
 <div class="admin-default-index">
     <h1><?= $this->context->action->uniqueId ?></h1>
     <table class="" id="test-table"></table>
+    <div>1111111111111</div>
 </div>
 <?php $this->endPage() ?>
 <?php

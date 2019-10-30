@@ -135,6 +135,8 @@ public function actionList()
 */
 public function actionDetail()
 {
-
+  $id = \Yii::$app->request->get('id');
+  
 }
+
 }
