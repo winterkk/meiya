@@ -22,9 +22,6 @@ return [
         'admin' => [
             'class' => 'backend\modules\admin\Module',
         ],
-        'rbac' => [
-            'class' => 'backend\modules\rbac\Module'
-        ],
         'system' => [
             'class' => 'backend\modules\system\Module'
         ],
@@ -32,8 +29,8 @@ return [
     // 别名
     'aliases' => [
         '@admin' => '@backend/modules/admin',
-        '@rbac' => '@backend/modules/rbac',
         '@system' => '@backend/modules/system',
+        "@mdm/admin" => "@vendor/mdmsoft/yii2-admin",
     ],
     'components' => [
         'request' => [
@@ -75,13 +72,6 @@ return [
             'showScriptName' => false,
             'rules' => $rules,
         ],
-        'as access' => [
-            'class' => 'rbac\components\AccessControl',
-            'allowActions' => [
-                'rbac/user/request-password-reset',
-                'rbac/user/reset-password'
-            ]
-        ],
         // i18n配置
         'i18n' => [
             'translations' => [
@@ -91,7 +81,33 @@ return [
                     'basePath' => '@backend/messages',
                 ]
             ]
-        ]
+        ],
+        // adminLTE view
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
+                ],
+            ],
+        ],
+        // adminLTE skin
+        'assetManager' => [
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-black',
+                ],
+            ],
+        ],
     ],
     'params' => $params,
+
+    // 允许访问
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            //'rbac/user/request-password-reset',
+            //'rbac/user/reset-password'
+            'site/index'
+        ]
+    ],
 ];
