@@ -25,12 +25,15 @@ return [
         'system' => [
             'class' => 'backend\modules\system\Module'
         ],
+        'rbac' => [
+            'class' => 'rbac\Module'
+        ]
     ],
     // 别名
     'aliases' => [
         '@admin' => '@backend/modules/admin',
         '@system' => '@backend/modules/system',
-        "@mdm/admin" => "@vendor/mdmsoft/yii2-admin",
+        "@rbac" => "@backend/modules/rbac",
     ],
     'components' => [
         'request' => [
