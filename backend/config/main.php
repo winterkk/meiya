@@ -19,21 +19,18 @@ return [
     'defaultRoute' => 'site/index',
     // 模块
     'modules' => [
-        'admin' => [
-            'class' => 'backend\modules\admin\Module',
-        ],
         'system' => [
             'class' => 'backend\modules\system\Module'
         ],
-        'rbac' => [
-            'class' => 'rbac\Module'
+        // rbac admin
+        'admin' => [
+            'class' => 'mdm\admin\Module'
         ]
     ],
     // 别名
     'aliases' => [
-        '@admin' => '@backend/modules/admin',
         '@system' => '@backend/modules/system',
-        "@rbac" => "@backend/modules/rbac",
+        '@mdm/admin' => '@vendor/mdmsoft/yii2-admin'
     ],
     'components' => [
         'request' => [
@@ -48,8 +45,8 @@ return [
             // ],
         ],
         'user' => [
-            'identityClass' => 'rbac\models\User',
-            'loginUrl' => ['/rbac/user/login'],
+            'identityClass' => 'common\models\Users',
+            'loginUrl' => ['/site/login'],
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
@@ -108,9 +105,8 @@ return [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            //'rbac/user/request-password-reset',
-            //'rbac/user/reset-password'
-            'site/index'
+            'site/*',
+            'admin/*'
         ]
     ],
 ];
