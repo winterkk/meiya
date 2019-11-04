@@ -19,6 +19,7 @@ $fieldOptions2 = [
 ];
 ?>
 
+<div style="background: url(/images/login.jpg) no-repeat center center;width: 100%;height: 100%;position: absolute;left: 0;top: 0;z-index: 90;">
 <div class="login-box">
     <div class="login-logo">
         <a href="#"><b>Meiya</b>  ERP</a>
@@ -68,3 +69,4 @@ $fieldOptions2 = [
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+</div>

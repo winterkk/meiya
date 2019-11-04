@@ -144,4 +144,13 @@ class AccessControl extends \yii\base\ActionFilter
 
         return true;
     }
+
+    /**
+     * after
+     */
+    public function afterAction($action, $result)
+    {
+        // Log::addLog($action);
+        return parent::afterAction($action, $result);
+    }
 }
