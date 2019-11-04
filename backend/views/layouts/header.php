@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini">MEIYA</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -239,8 +239,8 @@ use yii\helpers\Html;
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                肉山大魔王
+                                <small><?= date('Y-m-d') ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
