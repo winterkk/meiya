@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $username 用户
  * @property string $password 密码
+ * @property string $salt 干扰码
  * @property string $phone 手机
  * @property string $email 邮箱
  * @property string $avatar 头像
@@ -35,12 +36,12 @@ class Admin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'email', 'login_at'], 'required'],
+            [['username', 'email', 'login_at'], 'required'],
             [['avatar'], 'string'],
             [['reg_at', 'login_at', 'login_ip'], 'safe'],
             [['status'], 'integer'],
-            [['username', 'email'], 'string', 'max' => 64],
-            [['password'], 'string', 'max' => 32],
+            [['username', 'password', 'email'], 'string', 'max' => 64],
+            [['salt'], 'string', 'max' => 32],
             [['phone'], 'string', 'max' => 15],
             [['reg_ip'], 'string', 'max' => 20],
         ];
@@ -55,6 +56,7 @@ class Admin extends \yii\db\ActiveRecord
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
+            'salt' => 'Salt',
             'phone' => 'Phone',
             'email' => 'Email',
             'avatar' => 'Avatar',

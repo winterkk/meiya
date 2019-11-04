@@ -28,13 +28,15 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome(); // 默认 index/index
+        }
+
         $model = new LoginForm();
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            
+            return $this->goBack();
         }
 
         return $this->render('login', [

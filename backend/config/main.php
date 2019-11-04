@@ -108,7 +108,7 @@ return [
             'site/*',
             'admin/*',
             'gii/*',
-            'debug/*'
+            'debug/*',
         ]
     ],
 ];
