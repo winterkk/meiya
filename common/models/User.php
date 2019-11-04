@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%users}}".
+ * This is the model class for table "{{%user}}".
  *
  * @property int $id
  * @property string $nickname 昵称
@@ -25,18 +25,18 @@ use Yii;
  * @property string $last_login_at 最后登录时间
  * @property string $questions 找回问题
  * @property string $answer 答案
- * @property int $state 状态:1正常0删除
+ * @property int $status 状态:1正常0删除
  * @property int $is_set 是否授权
  * @property string $update_at 修改时间
  */
-class Users extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%users}}';
+        return '{{%user}}';
     }
 
     /**
@@ -46,7 +46,7 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             [['birth', 'reg_at', 'last_login_at', 'update_at'], 'safe'],
-            [['sex', 'state', 'is_set'], 'integer'],
+            [['sex', 'status', 'is_set'], 'integer'],
             [['reg_at', 'last_login_at', 'answer'], 'required'],
             [['answer'], 'string'],
             [['nickname', 'realname', 'wechat_openid'], 'string', 'max' => 50],
@@ -81,7 +81,7 @@ class Users extends \yii\db\ActiveRecord
             'last_login_at' => 'Last Login At',
             'questions' => 'Questions',
             'answer' => 'Answer',
-            'state' => 'State',
+            'status' => 'Status',
             'is_set' => 'Is Set',
             'update_at' => 'Update At',
         ];

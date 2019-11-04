@@ -45,7 +45,7 @@ return [
             // ],
         ],
         'user' => [
-            'identityClass' => 'common\models\Users',
+            'identityClass' => 'backend\models\BAdmin',
             'loginUrl' => ['/site/login'],
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
