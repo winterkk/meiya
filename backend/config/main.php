@@ -107,7 +107,7 @@ return [
         'allowActions' => [
             // 'site/*',
             'admin/*',
-            'gii/*',
+            // 'gii/*',
             'debug/*',
         ]
     ],

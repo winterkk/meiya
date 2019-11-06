@@ -26,12 +26,24 @@
         </form>
          /.search form -->
 <?php
-use backend\models\BMenu;
+use mdm\admin\components\MenuHelper;
     // 菜单过滤
-    $menu = BMenu::getMenuTree(\Yii::$app->user->id);
+    $callback = function($menu){
+        $items = $menu['children']; 
+        $return = [ 
+            'label' => $menu['name'], 
+            'url' => [$menu['route']], 
+        ];
+        if(isset($menu['icon'])){
+            $return['icon'] = $menu['icon']; 
+        }else{
+            $return['icon'] = 'fa fa-circle-o'; 
+        }
+        $items && $return['items'] = $items;
+        return $return; 
+    };
+    $menu = MenuHelper::getAssignedMenu(\Yii::$app->user->id, null, $callback);
 
-// echo '<pre>';
-// var_dump(\Yii::$app->authManager);exit;
 ?>
 
         <?= dmstr\widgets\Menu::widget(
