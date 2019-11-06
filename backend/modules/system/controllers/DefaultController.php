@@ -15,6 +15,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+    	$this->getView()->title='默认';
         return $this->render('index');
     }
 }
