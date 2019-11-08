@@ -55,7 +55,7 @@ class CommonService
 			return $path;
 		}
 		// 自定义
-		if (!$host) {
+		if ($host) {
 			return $host . $path;
 		}
 		// 系统定义

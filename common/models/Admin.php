@@ -54,10 +54,10 @@ class Admin extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
+            'username' => '用户名',
             'password' => 'Password',
             'salt' => 'Salt',
-            'phone' => 'Phone',
+            'phone' => '手机号',
             'email' => 'Email',
             'avatar' => 'Avatar',
             'reg_at' => 'Reg At',

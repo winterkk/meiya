@@ -3,6 +3,7 @@
 namespace backend\modules\system\controllers;
 
 use yii\web\Controller;
+use backend\models\searches\AdminSearch;
 
 /**
  * Default controller for the `system` module
@@ -15,7 +16,14 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+
     	$this->getView()->title='默认';
-        return $this->render('index');
+    	$searchModel = new AdminSearch();
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
