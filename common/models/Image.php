@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%imgs}}".
+ * This is the model class for table "{{%image}}".
  *
  * @property int $id
  * @property string $path 图片地址
@@ -14,14 +14,14 @@ use Yii;
  * @property int $height 图片高度
  * @property string $create_at 创建时间
  */
-class Imgs extends \yii\db\ActiveRecord
+class Image extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%imgs}}';
+        return '{{%image}}';
     }
 
     /**
@@ -34,7 +34,7 @@ class Imgs extends \yii\db\ActiveRecord
             [['path'], 'string'],
             [['width', 'height'], 'integer'],
             [['create_at'], 'safe'],
-            [['md5'], 'string', 'max' => 32],
+            [['md5'], 'string', 'max' => 64],
         ];
     }
 

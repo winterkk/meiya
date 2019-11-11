@@ -3,14 +3,13 @@
 namespace common\models;
 
 use Yii;
-use common\models\ArtsClasses;
-use common\models\ArtsStyles;
-use common\models\ArtsContents;
-use common\models\ArtsColorsRels;
-use common\models\Imgs;
+use common\models\ArtClass;
+use common\models\ArtStyle;
+use common\models\ArtContent;
+use common\models\Image;
 
 /**
- * This is the model class for table "{{%arts}}".
+ * This is the model class for table "{{%art}}".
  *
  * @property int $id
  * @property string $title 标题
@@ -27,7 +26,7 @@ use common\models\Imgs;
  * @property int $class_id 分类
  * @property int $style_id 风格
  * @property int $cont_id 内容
- * @property int $state 0删除1启用
+ * @property int $status 0删除1启用
  * @property string $desc 简介
  * @property string $mark 备注
  * @property int $views 浏览
@@ -36,14 +35,14 @@ use common\models\Imgs;
  * @property string $create_at 创建时间
  * @property string $update_at 修改时间
  */
-class Arts extends \yii\db\ActiveRecord
+class Art extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%arts}}';
+        return '{{%art}}';
     }
 
     /**
@@ -52,13 +51,14 @@ class Arts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sort', 'sku_num', 'cover_img', 'real_height', 'real_width', 'class_id', 'style_id', 'cont_id', 'state', 'views', 'likes', 'subscribe'], 'integer'],
+            [['sort', 'sku_num', 'cover_img', 'real_height', 'real_width', 'class_id', 'style_id', 'cont_id', 'status', 'views', 'likes', 'subscribe'], 'integer'],
             [['birth', 'create_at', 'update_at'], 'safe'],
             [['unit_price', 'current_price'], 'number'],
             [['desc', 'mark'], 'string'],
             [['mark', 'create_at'], 'required'],
-            [['title', 'qrcode'], 'string', 'max' => 150],
-            [['art_no'], 'string', 'max' => 100],
+            [['title'], 'string', 'max' => 150],
+            [['art_no'], 'string', 'max' => 50],
+            [['qrcode'], 'string', 'max' => 255],
         ];
     }
 
@@ -69,8 +69,8 @@ class Arts extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'art_no' => 'Art No',
+            'title' => '名称',
+            'art_no' => '编号',
             'sort' => 'Sort',
             'birth' => 'Birth',
             'sku_num' => 'Sku Num',
@@ -80,10 +80,10 @@ class Arts extends \yii\db\ActiveRecord
             'cover_img' => 'Cover Img',
             'real_height' => 'Real Height',
             'real_width' => 'Real Width',
-            'class_id' => 'Class ID',
-            'style_id' => 'Style ID',
-            'cont_id' => 'Cont ID',
-            'state' => 'State',
+            'class_id' => '类目',
+            'style_id' => '样式',
+            'cont_id' => '内容',
+            'status' => '状态',
             'desc' => 'Desc',
             'mark' => 'Mark',
             'views' => 'Views',
@@ -95,42 +95,34 @@ class Arts extends \yii\db\ActiveRecord
     }
 
     /**
-     * 关联类型
-     */
-    public function getArtsClasses()
-    {
-        return $this->hasOne(ArtsClasses::className(),['id'=>'class_id']);
-    }
-
-    /**
-     * 关联风格
-     */
-    public function getArtsStyles()
-    {
-        return $this->hasOne(ArtsStyles::className(),['id'=>'style_id']);
-    }
-
-    /**
-     * 关联内容
-     */
-    public function getArtsContents()
-    {
-        return $this->hasOne(ArtsContents::className(),['id'=>'cont_id']);
-    }
-
-    /**
-     * 关联颜色，一对多
-     */
-    public function getArtsColorsRels()
-    {
-        return $this->hasMany(ArtsColorsRels::className(),['art_id'=>'id']);
-    }
-
-    /**
      * 封面
      */
-    public function getCoverImg()
+    public function getImage()
     {
-        return $this->hasOne(Imgs::className(),['id'=>'cover_img']);
+        return $this->hasOne(Image::className(),['id'=>'cover_img']);
+    }
+
+    /**
+     * 分类
+     */
+    public function getArtClass()
+    {
+        return $this->hasOne(ArtClass::className(),['id'=>'class_id']);
+    }
+
+    /**
+     * 样式
+     */
+    public function getArtStyle()
+    {
+        return $this->hasOne(ArtStyle::className(),['id'=>'style_id']);
+    }
+
+    /**
+     * 内容
+     */
+    public function getArtContent()
+    {
+        return $this->hasOne(ArtContent::className(),['id'=>'cont_id']);
     }
 }

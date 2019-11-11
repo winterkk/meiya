@@ -5,23 +5,24 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%users_likes}}".
+ * This is the model class for table "{{%art_color}}".
  *
  * @property int $id
- * @property int $user_id 用户
- * @property int $art_id 画作
- * @property int $state 0删除1可用
- * @property string $create_at 添加时间
+ * @property int $art_id 图片ID
+ * @property int $color_id 颜色ID
+ * @property int $is_hot 热度排序
+ * @property int $status 状态：1正常0删除
+ * @property string $create_at 创建时间
  * @property string $update_at 修改时间
  */
-class UsersLikes extends \yii\db\ActiveRecord
+class ArtColor extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%users_likes}}';
+        return '{{%art_color}}';
     }
 
     /**
@@ -30,7 +31,7 @@ class UsersLikes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'art_id', 'state'], 'integer'],
+            [['art_id', 'color_id', 'is_hot', 'status'], 'integer'],
             [['create_at'], 'required'],
             [['create_at', 'update_at'], 'safe'],
         ];
@@ -43,9 +44,10 @@ class UsersLikes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
             'art_id' => 'Art ID',
-            'state' => 'State',
+            'color_id' => 'Color ID',
+            'is_hot' => 'Is Hot',
+            'status' => 'Status',
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];

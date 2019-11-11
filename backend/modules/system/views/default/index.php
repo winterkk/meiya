@@ -12,12 +12,12 @@ LayuiAsset::register($this);
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 </blockquote>
 
-<div class="system-default-index">
+<div class="admin-default-index">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // search
         // 'filterModel' => $searchModel,
-        'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'grid'],
+        'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'admin-grid'],
         'tableOptions' => ['class' => 'layui-table'],
         // page
         'pager' => [

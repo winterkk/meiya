@@ -36,9 +36,9 @@ class AdminSearch extends BAdmin
     			// 分页大小
     			'pageSize' => 5,
     			// 设置地址栏当前页数参数名
-    			// 'pageParam' => 'p',
-    			// // 设置地址栏分页大小参数名
-    			// 'pageSizeParam' => 'pageSize',
+    			'pageParam' => 'p',
+    			// 设置地址栏分页大小参数名
+    			'pageSizeParam' => 'pageSize',
     		],
     		// 排序
     		'sort' => [

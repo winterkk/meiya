@@ -3,27 +3,26 @@
 namespace common\models;
 
 use Yii;
-use common\models\ArtsColors;
 
 /**
- * This is the model class for table "{{%arts_colors_rels}}".
+ * This is the model class for table "{{%art_image}}".
  *
  * @property int $id
- * @property int $art_id 图片ID
- * @property int $color_id 颜色ID
- * @property int $is_hot 热度排序
- * @property int $state 状态：1正常0删除
+ * @property int $art_id 图片编号
+ * @property int $image_id 图片地址
+ * @property int $status 状态：1正常0删除
+ * @property int $type 类型：1原图2大图3中图4小图
  * @property string $create_at 创建时间
  * @property string $update_at 修改时间
  */
-class ArtsColorsRels extends \yii\db\ActiveRecord
+class ArtImage extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%arts_colors_rels}}';
+        return '{{%art_image}}';
     }
 
     /**
@@ -32,7 +31,7 @@ class ArtsColorsRels extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['art_id', 'color_id', 'is_hot', 'state'], 'integer'],
+            [['art_id', 'image_id', 'status', 'type'], 'integer'],
             [['create_at'], 'required'],
             [['create_at', 'update_at'], 'safe'],
         ];
@@ -46,19 +45,11 @@ class ArtsColorsRels extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'art_id' => 'Art ID',
-            'color_id' => 'Color ID',
-            'is_hot' => 'Is Hot',
-            'state' => 'State',
+            'image_id' => 'Image ID',
+            'status' => 'Status',
+            'type' => 'Type',
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];
-    }
-
-    /**
-     *
-     */
-    public function getArtsColors()
-    {
-         return $this->hasOne(ArtsColors::className(),['id'=>'color_id']);
     }
 }
